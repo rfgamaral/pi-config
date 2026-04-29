@@ -1,0 +1,16 @@
+{
+    "gitPollInterval": 5000,
+    "prPollInterval": 30000,
+    "workspaceProfiles": {
+        "nameOverrides": {
+            "/.pi/agent": "Pi",
+            "doist-os": "DoistOS",
+            "todoist-web": "Todoist Web",
+            "twist-web": "Twist Web"
+        },
+        "colors": {
+            "todoist": "#e06155",
+            "twist": "#22a5bf"
+        }
+    }
+}

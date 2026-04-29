@@ -1,0 +1,30 @@
+# Syncthing
+.stfolder/
+.stignore
+
+# Visual Studio Code
+.vscode/
+
+# Authentication
+auth.json
+
+# Pi auto-downloaded binaries
+bin/
+
+# Pi runtime data
+memory/
+reflect/
+sessions/
+
+# Extension caches
+extensions/context7/cache/
+
+# Project dependencies
+node_modules/
+
+# macOS
+.DS_Store
+
+# Log files
+*.log
+npm-debug.log*

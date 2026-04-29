@@ -1,0 +1,46 @@
+{
+  "lastChangelogVersion": "0.70.6",
+  "collapseChangelog": true,
+  "compaction": {
+    "enabled": true
+  },
+  "defaultModel": "gpt-5.4",
+  "defaultProvider": "openai-codex",
+  "defaultThinkingLevel": "xhigh",
+  "enabledModels": [
+    "openai-codex/gpt-5.4",
+    "openai-codex/gpt-5.4-mini",
+    "anthropic/claude-haiku-4-5",
+    "anthropic/claude-opus-4-7",
+    "anthropic/claude-sonnet-4-6"
+  ],
+  "gptConfig": {
+    "fastMode": true,
+    "personality": "none",
+    "showFooter": false,
+    "summary": "none",
+    "verbosity": "low"
+  },
+  "hideThinkingBlock": true,
+  "npmCommand": [
+    "fnm",
+    "exec",
+    "--using=v24.14.1",
+    "npm"
+  ],
+  "packages": [
+    "git:github.com/edxeth/pi-gpt-config",
+    "npm:@aliou/pi-guardrails",
+    "npm:@dreki-gg/pi-context7",
+    "npm:@dreki-gg/pi-questionnaire",
+    "npm:@ssweens/pi-handoff",
+    "npm:@tintinweb/pi-subagents",
+    "npm:pi-btw",
+    "npm:pi-copy-user-message",
+    "npm:pi-github",
+    "npm:pi-smart-fetch",
+    "npm:pi-tool-display"
+  ],
+  "quietStartup": true,
+  "theme": "dark"
+}

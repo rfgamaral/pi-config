@@ -1,0 +1,88 @@
+{
+    "version": "0.9.0-20260327",
+    "applyBuiltinDefaults": true,
+    "onboarding": {
+        "completed": true,
+        "completedAt": "2026-04-03T15:26:46.059Z",
+        "version": "0.9.0-20260327"
+    },
+    "policies": {
+        "rules": [
+            {
+                "id": "credential-paths",
+                "description": "Credential and auth files",
+                "patterns": [
+                    { "pattern": ".aws/**" },
+                    { "pattern": ".clasprc.json" },
+                    { "pattern": ".claude.json" },
+                    { "pattern": ".claude.json.backup" },
+                    { "pattern": ".claude/**" },
+                    { "pattern": ".config/git/credentials" },
+                    { "pattern": ".docker/config.json" },
+                    { "pattern": ".git-credentials" },
+                    { "pattern": ".gnupg/**" },
+                    { "pattern": ".gpg/**" },
+                    { "pattern": ".kube/config" },
+                    { "pattern": ".netrc" },
+                    { "pattern": ".npmrc" },
+                    { "pattern": ".pi/agent/auth.json" },
+                    { "pattern": ".pki/**" },
+                    { "pattern": ".ssh/**" }
+                ],
+                "protection": "noAccess",
+                "onlyIfExists": true,
+                "blockMessage": "Accessing {file} is not allowed. This file contains credentials or auth tokens."
+            },
+            {
+                "id": "shell-and-dotfiles",
+                "description": "Shell profiles and dotfiles managed by Ansible",
+                "patterns": [
+                    { "pattern": ".aliases" },
+                    { "pattern": ".ansible/**" },
+                    { "pattern": ".antidote/**" },
+                    { "pattern": ".bash_profile" },
+                    { "pattern": ".bashrc" },
+                    { "pattern": ".devrc" },
+                    { "pattern": ".dircolors" },
+                    { "pattern": ".doistrc" },
+                    { "pattern": ".gitconfig" },
+                    { "pattern": ".huskyrc" },
+                    { "pattern": ".inputrc" },
+                    { "pattern": ".nanorc" },
+                    { "pattern": ".profile" },
+                    { "pattern": ".zcompdump" },
+                    { "pattern": ".zprofile" },
+                    { "pattern": ".zsh/**" },
+                    { "pattern": ".zsh_plugins.txt" },
+                    { "pattern": ".zsh_plugins.zsh" },
+                    { "pattern": ".zshrc" }
+                ],
+                "protection": "noAccess",
+                "onlyIfExists": true,
+                "blockMessage": "Accessing {file} is not allowed. This file is managed by Ansible. Edit the Ansible playbook instead."
+            },
+            {
+                "id": "history-files",
+                "description": "Shell and tool history files",
+                "patterns": [
+                    { "pattern": ".bash_history" },
+                    { "pattern": ".lesshst" },
+                    { "pattern": ".python_history" },
+                    { "pattern": ".wget-hsts" },
+                    { "pattern": ".zsh_history" }
+                ],
+                "protection": "noAccess",
+                "onlyIfExists": true,
+                "blockMessage": "Accessing {file} is not allowed. History files should not be read or modified."
+            }
+        ]
+    },
+    "permissionGate": {
+        "patterns": [
+            { "pattern": "docker rm", "description": "Docker container removal" },
+            { "pattern": "docker rmi", "description": "Docker image removal" },
+            { "pattern": "docker system prune", "description": "Docker system cleanup" },
+            { "pattern": "npm publish", "description": "npm package publishing" }
+        ]
+    }
+}

@@ -1,0 +1,9 @@
+pre-commit:
+    jobs:
+        - name: format
+          run: bun run fix:format -- {staged_files}
+          glob: '*.{ts,json,md,yml}'
+          stage_fixed: true
+        - name: typecheck
+          run: bun run check:types
+          glob: '*.ts'

@@ -1,0 +1,36 @@
+{
+    "name": "@rfgamaral/pi-config",
+    "description": "Personal harness configuration for the Pi coding agent: extensions, skills, and prompts.",
+    "keywords": [
+        "pi-package"
+    ],
+    "license": "MIT",
+    "author": {
+        "name": "Ricardo Amaral",
+        "email": "hello@ricardoamaral.net"
+    },
+    "pi": {
+        "extensions": [
+            "./extensions"
+        ],
+        "skills": [
+            "./skills"
+        ],
+        "prompts": [
+            "./prompts"
+        ]
+    },
+    "scripts": {
+        "check:format": "oxfmt --check",
+        "check:types": "tsc",
+        "fix:format": "oxfmt",
+        "prepare": "lefthook install"
+    },
+    "devDependencies": {
+        "@mariozechner/pi-coding-agent": "*",
+        "@mariozechner/pi-tui": "*",
+        "lefthook": "2.1.4",
+        "oxfmt": "0.42.0",
+        "typescript": "6.0.2"
+    }
+}

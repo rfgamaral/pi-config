@@ -1,0 +1,45 @@
+{
+    "targets": [
+        {
+            "path": "~/.pi/agent/APPEND_SYSTEM.md",
+            "model": "anthropic/claude-sonnet-4.6",
+            "lookbackDays": 1,
+            "maxSessionBytes": 614400,
+            "backupDir": "~/.pi/agent/reflect/backups",
+            "transcriptSource": { "type": "pi-sessions" },
+            "prompt": "You are evolving an AI identity file ({fileName}) for a coding agent.\n\nThis file defines how the agent communicates: tone, discipline, what to do and not do. It should reflect consistent patterns observed in successful interactions and correct recurring violations.\n\n## Current\n{targetContent}\n\n## Conversations\n{transcripts}\n\nStrengthen rules that are violated often. Add rules for recurring patterns not yet captured. Remove or loosen rules that cause unnecessary friction. If nothing meaningful should change, return no edits."
+        },
+        {
+            "path": "~/.pi/agent/AGENTS.md",
+            "model": "anthropic/claude-sonnet-4.6",
+            "lookbackDays": 1,
+            "maxSessionBytes": 614400,
+            "backupDir": "~/.pi/agent/reflect/backups",
+            "transcriptSource": { "type": "pi-sessions" },
+            "prompt": "You are evolving a global operational instructions file ({fileName}) for a coding agent.\n\nThis file contains conventions, workflows, and rules that apply across all sessions regardless of project. It is distinct from identity and behavioral principles (which live elsewhere) and from long-term memory.\n\n## Current\n{targetContent}\n\n## Conversations\n{transcripts}\n\nAdd rules for consistent patterns the user follows that aren't yet captured. Strengthen rules that are frequently relevant. Remove rules that are stale, redundant, or never applicable. If nothing meaningful should change, return no edits."
+        },
+        {
+            "path": "~/.pi/agent/memory/MEMORY.md",
+            "model": "anthropic/claude-sonnet-4.6",
+            "lookbackDays": 1,
+            "maxSessionBytes": 614400,
+            "backupDir": "~/.pi/agent/reflect/backups",
+            "transcriptSource": { "type": "pi-sessions" },
+            "context": [
+                {
+                    "type": "files",
+                    "label": "daily logs",
+                    "paths": ["~/.pi/agent/memory/daily/*.md"],
+                    "maxBytes": 50000
+                },
+                {
+                    "type": "files",
+                    "label": "notes",
+                    "paths": ["~/.pi/agent/memory/notes/*.md"],
+                    "maxBytes": 50000
+                }
+            ],
+            "prompt": "You are maintaining a long-term memory file ({fileName}) for a coding agent.\n\nThis file stores durable facts, decisions, preferences, and learned context about the user and their environment. It should be concise, well-organized, and only contain information that remains true over time.\n\n## Current content\n{targetContent}\n\n## Recent conversations\n{transcripts}\n\n## Reference material\n{context}\n\n## Instructions\n1. Extract new durable facts, decisions, and preferences from recent conversations.\n2. Remove or update entries that are now stale or contradicted by newer information.\n3. Do NOT add transient information (one-off questions, temporary debugging, session-specific context).\n4. Keep entries concise. Group related facts under clear headings.\n5. If nothing meaningful should change, return no edits."
+        }
+    ]
+}
