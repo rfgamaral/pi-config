@@ -1,16 +1,16 @@
 # Clipboard Image
 
-Attaches clipboard images to Pi prompts on WSL. Press `Alt+V` to capture the current clipboard image. The image is converted to PNG regardless of source format, resized if larger than 2000px, and queued for attachment. A numbered `[[IMAGE:N]]` marker appears in the editor to track each pending attachment; markers and images are sent inline with your message when you submit.
+Attaches clipboard images to Pi prompts on WSL. Press `Alt+V` to capture the current clipboard image. The image is converted to PNG regardless of source format, resized if larger than 2000px, and queued for attachment. A numbered `[paste image #N]` marker appears in the editor to track each pending attachment; markers and images are sent inline with your message when you submit.
 
 ## How It Works
 
 1. Press `Alt+V`. The extension reads the Wayland clipboard via `wl-paste` and pipes the image through ImageMagick for format conversion and resize.
-2. A numbered `[[IMAGE:1]]` marker is inserted into the editor. Type your message around it.
+2. A numbered `[paste image #1]` marker is inserted into the editor. Type your message around it.
 3. On send, images whose markers are still present are attached to the message. The markers remain visible in the rendered prompt.
 
 ### Multiple Images
 
-Each paste adds a new numbered marker (`[[IMAGE:1]]`, `[[IMAGE:2]]`, etc.) and queues an additional image. All images whose markers are present are attached when you send.
+Each paste adds a new numbered marker (`[paste image #1]`, `[paste image #2]`, etc.) and queues an additional image. All images whose markers are present are attached when you send.
 
 ### Cancelling
 

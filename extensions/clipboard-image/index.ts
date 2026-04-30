@@ -5,6 +5,11 @@ import type {
     InputEventResult,
 } from '@mariozechner/pi-coding-agent'
 import { spawnSync } from 'node:child_process'
+import {
+    findMarkerIndices,
+    formatImageMarker,
+    installClipboardImageMarkerPatch,
+} from './editor-markers'
 
 // -----------------------------------------------------------------------------
 // Constants
@@ -12,9 +17,6 @@ import { spawnSync } from 'node:child_process'
 
 /** Maximum image dimension in pixels; larger images are resized proportionally. */
 const MAX_DIMENSION = 2000
-
-/** Pattern matching numbered image markers like `[[IMAGE:1]]`. */
-const IMAGE_MARKER_RE = /\[\[IMAGE:(\d+)\]\]/g
 
 /** MIME types recognized as images when reading the clipboard. */
 const SUPPORTED_MIME_TYPES = [
@@ -98,17 +100,6 @@ function readClipboardImage(): ImagePayload | null {
     return { type: 'image', data: buffer.toString('base64'), mimeType: 'image/png' }
 }
 
-/** Extract the set of image indices still present in the text. */
-function findMarkerIndices(text: string): Set<number> {
-    const indices = new Set<number>()
-
-    for (const match of text.matchAll(IMAGE_MARKER_RE)) {
-        indices.add(Number(match[1]))
-    }
-
-    return indices
-}
-
 // -----------------------------------------------------------------------------
 // Main functions
 // -----------------------------------------------------------------------------
@@ -126,7 +117,7 @@ function pasteImage(ctx: ExtensionContext, state: ClipboardImageState): void {
 
     state.pending.set(index, image)
 
-    const marker = `[[IMAGE:${index}]]`
+    const marker = formatImageMarker(index)
     const current = ctx.ui.getEditorText()
     const separator = current && !current.endsWith(' ') && !current.endsWith('\n') ? ' ' : ''
 
@@ -176,6 +167,8 @@ export default function (pi: ExtensionAPI) {
         pending: new Map<number, ImagePayload>(),
         nextIndex: 1,
     }
+
+    installClipboardImageMarkerPatch(() => new Set(state.pending.keys()))
 
     pi.on('input', async (event) => transformInput(event, state))
 
