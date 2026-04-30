@@ -18,7 +18,7 @@
   ],
   "gptConfig": {
     "fastMode": true,
-    "personality": "none",
+    "personality": "claude",
     "showFooter": false,
     "summary": "none",
     "verbosity": "low"
