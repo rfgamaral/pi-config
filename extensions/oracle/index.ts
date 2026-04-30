@@ -31,7 +31,7 @@ const CONFIG_PATH = join(getAgentDir(), 'extensions', 'oracle.json')
 
 /** Default extension configuration. */
 const DEFAULT_CONFIG = {
-    models: ['anthropic/claude-opus-4-7', 'openai-codex/gpt-5.4'],
+    models: ['anthropic/claude-opus-4-7', 'openai-codex/gpt-5.5'],
     maxThinking: 'auto' as const,
 }
 
