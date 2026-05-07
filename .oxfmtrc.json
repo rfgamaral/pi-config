@@ -1,6 +1,6 @@
 {
     "$schema": "./node_modules/oxfmt/configuration_schema.json",
-    "ignorePatterns": ["**/node_modules/*", "settings.json"],
+    "ignorePatterns": ["**/node_modules/*"],
     "arrowParens": "always",
     "bracketSpacing": true,
     "embeddedLanguageFormatting": "auto",
@@ -15,5 +15,15 @@
     "sortPackageJson": false,
     "tabWidth": 4,
     "trailingComma": "all",
-    "useTabs": false
+    "useTabs": false,
+    "overrides": [
+        {
+            "files": ["settings.json"],
+            "options": {
+                "tabWidth": 2,
+                "printWidth": 1,
+                "insertFinalNewline": false
+            }
+        }
+    ]
 }
