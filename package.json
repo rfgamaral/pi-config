@@ -27,8 +27,8 @@
         "prepare": "lefthook install"
     },
     "devDependencies": {
-        "@mariozechner/pi-coding-agent": "*",
-        "@mariozechner/pi-tui": "*",
+        "@earendil-works/pi-coding-agent": "*",
+        "@earendil-works/pi-tui": "*",
         "lefthook": "2.1.4",
         "oxfmt": "0.42.0",
         "typescript": "6.0.2"

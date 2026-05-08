@@ -1,11 +1,11 @@
-import { complete, type Model, type Api } from '@mariozechner/pi-ai'
+import { complete, type Model, type Api } from '@earendil-works/pi-ai'
 import {
     getAgentDir,
     type ExtensionAPI,
     type ExtensionContext,
     type SessionEntry,
-} from '@mariozechner/pi-coding-agent'
-import { convertToLlm, serializeConversation } from '@mariozechner/pi-coding-agent'
+} from '@earendil-works/pi-coding-agent'
+import { convertToLlm, serializeConversation } from '@earendil-works/pi-coding-agent'
 import { readFileSync } from 'node:fs'
 import { join } from 'node:path'
 

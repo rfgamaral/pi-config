@@ -3,8 +3,8 @@ import {
     CustomEditor,
     type ExtensionAPI,
     type ExtensionContext,
-} from '@mariozechner/pi-coding-agent'
-import { visibleWidth, truncateToWidth } from '@mariozechner/pi-tui'
+} from '@earendil-works/pi-coding-agent'
+import { visibleWidth, truncateToWidth } from '@earendil-works/pi-tui'
 import { readFileSync } from 'node:fs'
 import { readFile } from 'node:fs/promises'
 import { basename, join } from 'node:path'

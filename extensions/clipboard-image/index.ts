@@ -3,7 +3,7 @@ import type {
     ExtensionContext,
     InputEvent,
     InputEventResult,
-} from '@mariozechner/pi-coding-agent'
+} from '@earendil-works/pi-coding-agent'
 import { spawnSync } from 'node:child_process'
 import {
     findMarkerIndices,

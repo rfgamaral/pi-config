@@ -1154,7 +1154,7 @@ export async function runReflection(
         apiKey = options.currentModelApiKey
         modelLabel = `${model.provider}/${model.id}`
     } else {
-        const getModelFn = deps?.getModel ?? (await import('@mariozechner/pi-ai')).getModel
+        const getModelFn = deps?.getModel ?? (await import('@earendil-works/pi-ai')).getModel
         const [provider, modelId] = target.model.split('/', 2)
         model = getModelFn(provider as any, modelId as any)
 
@@ -1189,7 +1189,8 @@ export async function runReflection(
     }
 
     // Build batches and call LLM
-    const completeFn = deps?.completeSimple ?? (await import('@mariozechner/pi-ai')).completeSimple
+    const completeFn =
+        deps?.completeSimple ?? (await import('@earendil-works/pi-ai')).completeSimple
 
     // Determine if we need multiple batches
     // Reserve space for target file, system prompt, tool schema, and context

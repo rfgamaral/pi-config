@@ -20,14 +20,14 @@
  * Dashboard widget:
  *   - Auto-generated "Last 24h" summary from session metadata (titles, timestamps, costs)
  *   - Rebuilt every 15 minutes in the background
- *   - Shown on session_start and session_switch (so /new gets it too)
+ *   - Shown on session_start, including new/resume/fork session replacement paths
  */
 
-import type { ExtensionAPI } from '@mariozechner/pi-coding-agent'
-import { getMarkdownTheme, keyHint } from '@mariozechner/pi-coding-agent'
-import { Container, Markdown, Spacer, Text } from '@mariozechner/pi-tui'
-import { Type } from '@sinclair/typebox'
-import { StringEnum, completeSimple, getModel } from '@mariozechner/pi-ai'
+import type { ExtensionAPI } from '@earendil-works/pi-coding-agent'
+import { getMarkdownTheme, keyHint } from '@earendil-works/pi-coding-agent'
+import { Container, Markdown, Spacer, Text } from '@earendil-works/pi-tui'
+import { Type } from 'typebox'
+import { StringEnum, completeSimple, getModel } from '@earendil-works/pi-ai'
 import * as fs from 'node:fs'
 import * as path from 'node:path'
 import { execFileSync } from 'node:child_process'
@@ -382,11 +382,6 @@ export default function (pi: ExtensionAPI) {
                 } catch {}
             }, REBUILD_INTERVAL_MS)
         }
-    })
-
-    pi.on('session_switch', async (_event, ctx) => {
-        modelRegistryRef = ctx.modelRegistry
-        await showDashboard(ctx)
     })
 
     pi.on('agent_start', async (_event, ctx) => {
