@@ -25,6 +25,7 @@ It is inspired by [OpenClaw](https://openclaw.ai)'s approach to agent memory. Yo
 - Bootstrap bug: memory instructions were skipped until a memory file already had content
 - Daily logging bug on empty memory: the Daily Log Rule was skipped, so meaningful interactions stopped being logged
 - Pi 0.74 session lifecycle compatibility: `session_start` now covers new/resume/fork session replacement paths, replacing the removed `session_switch` event
+- Cross-platform session scanning: the `Last 24h` dashboard now scans all Pi session directories matching Pi's encoded session-dir format instead of only macOS-style `--Users-...` paths
 
 ## Layout
 

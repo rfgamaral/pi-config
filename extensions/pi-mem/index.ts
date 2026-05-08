@@ -91,10 +91,11 @@ async function collectSessions(): Promise<{
     const sessionDirs: string[] = []
 
     try {
-        for (const dir of fs.readdirSync(SESSIONS_DIR)) {
-            if (dir.startsWith('--Users-') && !dir.includes('-T-pi-')) {
-                sessionDirs.push(path.join(SESSIONS_DIR, dir))
-            }
+        for (const entry of fs.readdirSync(SESSIONS_DIR, { withFileTypes: true })) {
+            if (!entry.isDirectory()) continue
+            if (!entry.name.startsWith('--') || !entry.name.endsWith('--')) continue
+            if (entry.name.includes('-T-pi-')) continue
+            sessionDirs.push(path.join(SESSIONS_DIR, entry.name))
         }
     } catch {
         return { roots: [], childCountMap: new Map(), totalCost: 0 }
