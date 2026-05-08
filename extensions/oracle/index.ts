@@ -1,24 +1,24 @@
 import {
     completeSimple,
-    supportsXhigh,
+    getSupportedThinkingLevels,
     type UserMessage,
     type Model,
     type Api,
-} from '@mariozechner/pi-ai'
-import type { ExtensionAPI, ExtensionContext, SessionEntry } from '@mariozechner/pi-coding-agent'
+} from '@earendil-works/pi-ai'
+import type { ExtensionAPI, ExtensionContext, SessionEntry } from '@earendil-works/pi-coding-agent'
 import {
     convertToLlm,
     getAgentDir,
     keyHint,
     serializeConversation,
-} from '@mariozechner/pi-coding-agent'
+} from '@earendil-works/pi-coding-agent'
 import {
     Text,
     matchesKey,
     truncateToWidth,
     visibleWidth,
     wrapTextWithAnsi,
-} from '@mariozechner/pi-tui'
+} from '@earendil-works/pi-tui'
 import { readFileSync } from 'node:fs'
 import { join, resolve } from 'node:path'
 
@@ -140,7 +140,7 @@ function loadConfig(): OracleConfig {
 // Helpers
 // -----------------------------------------------------------------------------
 
-function getAutoThinkingLevel(model: Pick<Model<Api>, 'api' | 'id' | 'reasoning'>): ThinkingLevel {
+function getAutoThinkingLevel(model: Pick<Model<Api>, 'api' | 'reasoning'>): ThinkingLevel {
     if (!model.reasoning) {
         return 'off'
     }
@@ -149,7 +149,9 @@ function getAutoThinkingLevel(model: Pick<Model<Api>, 'api' | 'id' | 'reasoning'
         return 'high'
     }
 
-    return supportsXhigh(model as Model<Api>) ? 'xhigh' : 'high'
+    const supportedThinkingLevels = getSupportedThinkingLevels(model as Model<Api>)
+
+    return supportedThinkingLevels.includes('xhigh') ? 'xhigh' : 'high'
 }
 
 function clampThinkingLevel(level: ThinkingLevel, cap: ThinkingLevel): ThinkingLevel {
