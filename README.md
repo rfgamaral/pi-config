@@ -36,6 +36,7 @@ The repo includes its own set of extensions, skills, and prompts, also exported 
 | ⑂   | [`oracle`](extensions/oracle)                       | Second opinion from an alternate model with ranked auto-selection, automatic thinking caps, and optional context injection |
 | ⑂   | [`pi-mem`](extensions/pi-mem)                       | Daily memory for Pi with long-term notes, daily logs, scratchpad, and automatic context injection                          |
 | ⑂   | [`pi-reflect`](extensions/pi-reflect)               | Iterative reflection for Pi that analyzes recent sessions and updates behavioral files and memory                          |
+| ●   | [`tool-policy`](extensions/tool-policy)             | Disables configured tool names so overlapping extension tools do not compete in the agent's active tool set                |
 | ⑂   | [`whimsical`](extensions/whimsical)                 | Random short whimsical working messages for Pi's interactive TUI                                                           |
 
 ### Skills

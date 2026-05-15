@@ -36,5 +36,10 @@
     "npm:pi-tool-display"
   ],
   "quietStartup": true,
-  "theme": "dark"
+  "theme": "dark",
+  "tool-policy": {
+    "disabledTools": [
+      "fetch_content"
+    ]
+  }
 }
