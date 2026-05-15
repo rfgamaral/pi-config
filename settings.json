@@ -33,7 +33,8 @@
     "npm:pi-copy-user-message",
     "npm:pi-github",
     "npm:pi-smart-fetch",
-    "npm:pi-tool-display"
+    "npm:pi-tool-display",
+    "npm:pi-web-access"
   ],
   "quietStartup": true,
   "theme": "dark",
