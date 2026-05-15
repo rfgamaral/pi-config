@@ -16,13 +16,6 @@
     "anthropic/claude-sonnet-4-6",
     "anthropic/claude-haiku-4-5"
   ],
-  "gptConfig": {
-    "fastMode": true,
-    "personality": "claude",
-    "showFooter": false,
-    "summary": "none",
-    "verbosity": "low"
-  },
   "hideThinkingBlock": true,
   "npmCommand": [
     "fnm",
@@ -31,7 +24,6 @@
     "npm"
   ],
   "packages": [
-    "git:github.com/edxeth/pi-gpt-config",
     "npm:@aliou/pi-guardrails",
     "npm:@dreki-gg/pi-context7",
     "npm:@dreki-gg/pi-questionnaire",
