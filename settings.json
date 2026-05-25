@@ -1,5 +1,5 @@
 {
-  "lastChangelogVersion": "0.74.0",
+  "lastChangelogVersion": "0.75.5",
   "collapseChangelog": true,
   "compaction": {
     "enabled": true
@@ -43,5 +43,8 @@
     "disabledTools": [
       "fetch_content"
     ]
+  },
+  "warnings": {
+    "anthropicExtraUsage": false
   }
 }
