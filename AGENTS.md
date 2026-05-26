@@ -16,6 +16,8 @@
     - Describe the feature or bug, not implementation details.
     - Link the motivating discussion/thread when there is one.
     - Only add a technical details section when the code changes aren't self-explanatory.
+- When a mechanical fix (lint, compiler, codemod) cascades into a new violation, stop and present options (keep partial / revert / continue) before chasing the cascade. Don't silently expand scope.
+- When I say "commit", create a new commit on top of the current branch. Only amend the previous commit when I explicitly say "amend".
 
 ### Doist-specific guidelines
 
