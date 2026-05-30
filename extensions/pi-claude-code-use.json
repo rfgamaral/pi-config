@@ -1,0 +1,25 @@
+{
+    "toolAliases": [
+        ["ask_user_question", "mcp__ask_user_question__ask"],
+        ["batch_web_fetch", "mcp__smart_fetch__batch_web_fetch"],
+        ["code_search", "mcp__web__code_search"],
+        ["contact_supervisor", "mcp__intercom__contact_supervisor"],
+        ["context7_get_cached_doc_raw", "mcp__context7__get_cached_doc_raw"],
+        ["context7_get_library_docs", "mcp__context7__get_library_docs"],
+        ["context7_resolve_library_id", "mcp__context7__resolve_library_id"],
+        ["get_search_content", "mcp__web__get_search_content"],
+        ["github", "mcp__github__run"],
+        ["init_experiment", "mcp__autoresearch__init_experiment"],
+        ["intercom", "mcp__intercom__intercom"],
+        ["log_experiment", "mcp__autoresearch__log_experiment"],
+        ["memory_read", "mcp__mem__read"],
+        ["memory_search", "mcp__mem__search"],
+        ["memory_write", "mcp__mem__write"],
+        ["run_experiment", "mcp__autoresearch__run_experiment"],
+        ["scratchpad", "mcp__mem__scratchpad"],
+        ["subagent", "mcp__subagents__subagent"],
+        ["todo", "mcp__todo__todo"],
+        ["web_fetch", "mcp__smart_fetch__web_fetch"],
+        ["web_search", "mcp__web__search"]
+    ]
+}
