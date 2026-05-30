@@ -26,7 +26,7 @@
     "npm:@aliou/pi-guardrails",
     "npm:@benvargas/pi-claude-code-use",
     "npm:@dreki-gg/pi-context7",
-    "npm:@dreki-gg/pi-questionnaire",
+    "npm:@juicesharp/rpiv-ask-user-question",
     "npm:@tmustier/pi-usage-extension",
     "npm:pi-autoresearch",
     "npm:pi-copy-user-message",

@@ -56,20 +56,20 @@ The repo includes its own set of extensions, skills, and prompts, also exported 
 
 In addition to the included packages, the setup relies on these community [Pi packages](https://github.com/badlogic/pi-mono/blob/main/packages/coding-agent/docs/packages.md) which are installed separately.
 
-| Package                                                                      | Description                                                                              |
-| ---------------------------------------------------------------------------- | ---------------------------------------------------------------------------------------- |
-| [`pi-autoresearch`](https://pi.dev/packages/pi-autoresearch)                 | Autonomous experiment loop: try ideas, benchmark, keep wins, revert regressions          |
-| [`pi-context7`](https://pi.dev/packages/@dreki-gg/pi-context7)               | Pi-native Context7 docs lookup with direct HTTP, cache, and raw-doc retrieval            |
-| [`pi-copy-user-message`](https://pi.dev/packages/pi-copy-user-message)       | Slash command to copy the most recent user message to the clipboard                      |
-| [`pi-github`](https://pi.dev/packages/pi-github)                             | GitHub toolkit for Pi with thread formatting, PR inspection, and repo search             |
-| [`pi-gpt-config`](https://github.com/edxeth/pi-gpt-config)                   | Codex-parity settings panel for supported OpenAI models                                  |
-| [`pi-guardrails`](https://pi.dev/packages/@aliou/pi-guardrails)              | Security hooks to reduce accidental destructive actions and secret access                |
-| [`pi-intercom`](https://pi.dev/packages/pi-intercom)                         | Coordination channel for subagents to talk back to the parent session for decisions      |
-| [`pi-questionnaire`](https://pi.dev/packages/@dreki-gg/pi-questionnaire)     | Structured questionnaire flow for Pi with multi-step prompts and normalized answers      |
-| [`pi-smart-fetch`](https://pi.dev/packages/pi-smart-fetch)                   | Browser-grade fetch for Pi with TLS impersonation, readable extraction, and batch fetch  |
-| [`pi-subagents`](https://pi.dev/packages/pi-subagents)                       | Role-based subagents with chains, parallel fan-out, review loops, and worktree isolation |
-| [`pi-tool-display`](https://pi.dev/packages/pi-tool-display)                 | OpenCode-style tool rendering for Pi with compact output and richer diffs                |
-| [`pi-usage-extension`](https://pi.dev/packages/@tmustier/pi-usage-extension) | Dashboard with aggregated usage statistics across all sessions                           |
+| Package                                                                                | Description                                                                              |
+| -------------------------------------------------------------------------------------- | ---------------------------------------------------------------------------------------- |
+| [`pi-autoresearch`](https://pi.dev/packages/pi-autoresearch)                           | Autonomous experiment loop: try ideas, benchmark, keep wins, revert regressions          |
+| [`pi-context7`](https://pi.dev/packages/@dreki-gg/pi-context7)                         | Pi-native Context7 docs lookup with direct HTTP, cache, and raw-doc retrieval            |
+| [`pi-copy-user-message`](https://pi.dev/packages/pi-copy-user-message)                 | Slash command to copy the most recent user message to the clipboard                      |
+| [`pi-github`](https://pi.dev/packages/pi-github)                                       | GitHub toolkit for Pi with thread formatting, PR inspection, and repo search             |
+| [`pi-gpt-config`](https://github.com/edxeth/pi-gpt-config)                             | Codex-parity settings panel for supported OpenAI models                                  |
+| [`pi-guardrails`](https://pi.dev/packages/@aliou/pi-guardrails)                        | Security hooks to reduce accidental destructive actions and secret access                |
+| [`pi-intercom`](https://pi.dev/packages/pi-intercom)                                   | Coordination channel for subagents to talk back to the parent session for decisions      |
+| [`pi-smart-fetch`](https://pi.dev/packages/pi-smart-fetch)                             | Browser-grade fetch for Pi with TLS impersonation, readable extraction, and batch fetch  |
+| [`pi-subagents`](https://pi.dev/packages/pi-subagents)                                 | Role-based subagents with chains, parallel fan-out, review loops, and worktree isolation |
+| [`pi-tool-display`](https://pi.dev/packages/pi-tool-display)                           | OpenCode-style tool rendering for Pi with compact output and richer diffs                |
+| [`pi-usage-extension`](https://pi.dev/packages/@tmustier/pi-usage-extension)           | Dashboard with aggregated usage statistics across all sessions                           |
+| [`rpiv-ask-user-question`](https://pi.dev/packages/@juicesharp/rpiv-ask-user-question) | Structured clarifying questions with a tabbed dialog and side-by-side previews           |
 
 ## License
 
