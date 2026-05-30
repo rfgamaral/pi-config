@@ -1,18 +1,17 @@
 {
-  "lastChangelogVersion": "0.75.5",
+  "lastChangelogVersion": "0.78.0",
   "collapseChangelog": true,
   "compaction": {
     "enabled": true
   },
-  "defaultModel": "claude-opus-4-7",
+  "defaultModel": "claude-opus-4-8",
   "defaultProvider": "anthropic",
   "defaultThinkingLevel": "xhigh",
   "enabledModels": [
     "openai-codex/gpt-5.5",
     "openai-codex/gpt-5.4",
     "openai-codex/gpt-5.4-mini",
-    "anthropic/claude-opus-4-7",
-    "anthropic/claude-opus-4-6",
+    "anthropic/claude-opus-4-8",
     "anthropic/claude-sonnet-4-6",
     "anthropic/claude-haiku-4-5"
   ],
@@ -38,6 +37,9 @@
     "npm:pi-web-access"
   ],
   "quietStartup": true,
+  "terminal": {
+    "showTerminalProgress": true
+  },
   "theme": "dark",
   "tool-policy": {
     "disabledTools": [
