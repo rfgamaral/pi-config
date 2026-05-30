@@ -70,6 +70,7 @@ In addition to the included packages, the setup relies on these community [Pi pa
 | [`pi-tool-display`](https://pi.dev/packages/pi-tool-display)                           | OpenCode-style tool rendering for Pi with compact output and richer diffs                |
 | [`pi-usage-extension`](https://pi.dev/packages/@tmustier/pi-usage-extension)           | Dashboard with aggregated usage statistics across all sessions                           |
 | [`rpiv-ask-user-question`](https://pi.dev/packages/@juicesharp/rpiv-ask-user-question) | Structured clarifying questions with a tabbed dialog and side-by-side previews           |
+| [`rpiv-btw`](https://pi.dev/packages/@juicesharp/rpiv-btw)                             | Side-question panel backed by a read-only clone of the conversation                      |
 | [`rpiv-todo`](https://pi.dev/packages/@juicesharp/rpiv-todo)                           | Persistent todo list that survives reloads and conversation compaction                   |
 
 ## License
