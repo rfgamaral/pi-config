@@ -58,6 +58,7 @@ In addition to the included packages, the setup relies on these community [Pi pa
 
 | Package                                                                  | Description                                                                              |
 | ------------------------------------------------------------------------ | ---------------------------------------------------------------------------------------- |
+| [`pi-autoresearch`](https://pi.dev/packages/pi-autoresearch)             | Autonomous experiment loop: try ideas, benchmark, keep wins, revert regressions          |
 | [`pi-context7`](https://pi.dev/packages/@dreki-gg/pi-context7)           | Pi-native Context7 docs lookup with direct HTTP, cache, and raw-doc retrieval            |
 | [`pi-copy-user-message`](https://pi.dev/packages/pi-copy-user-message)   | Slash command to copy the most recent user message to the clipboard                      |
 | [`pi-github`](https://pi.dev/packages/pi-github)                         | GitHub toolkit for Pi with thread formatting, PR inspection, and repo search             |

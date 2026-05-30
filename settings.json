@@ -27,6 +27,7 @@
     "npm:@benvargas/pi-claude-code-use",
     "npm:@dreki-gg/pi-context7",
     "npm:@dreki-gg/pi-questionnaire",
+    "npm:pi-autoresearch",
     "npm:pi-copy-user-message",
     "npm:pi-github",
     "npm:pi-intercom",
