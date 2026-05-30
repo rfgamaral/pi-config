@@ -27,10 +27,11 @@
     "npm:@benvargas/pi-claude-code-use",
     "npm:@dreki-gg/pi-context7",
     "npm:@dreki-gg/pi-questionnaire",
-    "npm:@tintinweb/pi-subagents",
     "npm:pi-copy-user-message",
     "npm:pi-github",
+    "npm:pi-intercom",
     "npm:pi-smart-fetch",
+    "npm:pi-subagents",
     "npm:pi-tool-display",
     "npm:pi-web-access"
   ],

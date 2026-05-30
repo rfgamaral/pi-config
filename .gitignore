@@ -12,6 +12,7 @@ auth.json
 bin/
 
 # Pi runtime data
+intercom/
 memory/
 reflect/
 sessions/
