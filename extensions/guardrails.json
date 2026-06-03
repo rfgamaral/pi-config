@@ -16,7 +16,6 @@
                     { "pattern": ".clasprc.json" },
                     { "pattern": ".claude.json" },
                     { "pattern": ".claude.json.backup" },
-                    { "pattern": ".claude/**" },
                     { "pattern": ".config/git/credentials" },
                     { "pattern": ".docker/config.json" },
                     { "pattern": ".git-credentials" },
