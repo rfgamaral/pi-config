@@ -12,6 +12,7 @@
         ["init_experiment", "mcp__autoresearch__init_experiment"],
         ["intercom", "mcp__intercom__intercom"],
         ["log_experiment", "mcp__autoresearch__log_experiment"],
+        ["mcp", "mcp__adapter__proxy"],
         ["memory_read", "mcp__mem__read"],
         ["memory_search", "mcp__mem__search"],
         ["memory_write", "mcp__mem__write"],

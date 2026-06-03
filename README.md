@@ -65,6 +65,7 @@ In addition to the included packages, the setup relies on these community [Pi pa
 | [`pi-gpt-config`](https://github.com/edxeth/pi-gpt-config)                             | Codex-parity settings panel for supported OpenAI models                                  |
 | [`pi-guardrails`](https://pi.dev/packages/@aliou/pi-guardrails)                        | Security hooks to reduce accidental destructive actions and secret access                |
 | [`pi-intercom`](https://pi.dev/packages/pi-intercom)                                   | Coordination channel for subagents to talk back to the parent session for decisions      |
+| [`pi-mcp-adapter`](https://pi.dev/packages/pi-mcp-adapter)                             | Adapter to run MCP (Model Context Protocol) servers as Pi extensions                     |
 | [`pi-smart-fetch`](https://pi.dev/packages/pi-smart-fetch)                             | Browser-grade fetch for Pi with TLS impersonation, readable extraction, and batch fetch  |
 | [`pi-subagents`](https://pi.dev/packages/pi-subagents)                                 | Role-based subagents with chains, parallel fan-out, review loops, and worktree isolation |
 | [`pi-tool-display`](https://pi.dev/packages/pi-tool-display)                           | OpenCode-style tool rendering for Pi with compact output and richer diffs                |

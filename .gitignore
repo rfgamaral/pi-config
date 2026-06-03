@@ -19,6 +19,8 @@ sessions/
 
 # Extension caches
 extensions/context7/cache/
+mcp-cache.json
+mcp-npx-cache.json
 
 # Project dependencies
 node_modules/

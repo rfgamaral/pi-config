@@ -34,6 +34,7 @@
     "npm:pi-copy-user-message",
     "npm:pi-github",
     "npm:pi-intercom",
+    "npm:pi-mcp-adapter",
     "npm:pi-smart-fetch",
     "npm:pi-subagents",
     "npm:pi-tool-display",
