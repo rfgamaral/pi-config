@@ -16,6 +16,7 @@ intercom/
 memory/
 reflect/
 sessions/
+models-store.json
 
 # Extension caches
 extensions/context7/cache/
