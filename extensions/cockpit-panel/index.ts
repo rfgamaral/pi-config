@@ -34,6 +34,7 @@ const THINKING_ICONS: Record<string, string> = {
     medium: '◕',
     high: '●',
     xhigh: '◉',
+    max: '◎',
 }
 
 /** Colored status icons matching GitHub's PR state palette. */
