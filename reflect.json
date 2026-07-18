@@ -2,7 +2,7 @@
     "targets": [
         {
             "path": "~/.pi/agent/APPEND_SYSTEM.md",
-            "model": "anthropic/claude-sonnet-4-6",
+            "model": "anthropic/claude-sonnet-5",
             "lookbackDays": 1,
             "maxSessionBytes": 614400,
             "backupDir": "~/.pi/agent/reflect/backups",
@@ -11,7 +11,7 @@
         },
         {
             "path": "~/.pi/agent/AGENTS.md",
-            "model": "anthropic/claude-sonnet-4-6",
+            "model": "anthropic/claude-sonnet-5",
             "lookbackDays": 1,
             "maxSessionBytes": 614400,
             "backupDir": "~/.pi/agent/reflect/backups",
@@ -20,7 +20,7 @@
         },
         {
             "path": "~/.pi/agent/memory/MEMORY.md",
-            "model": "anthropic/claude-sonnet-4-6",
+            "model": "anthropic/claude-sonnet-5",
             "lookbackDays": 1,
             "maxSessionBytes": 614400,
             "backupDir": "~/.pi/agent/reflect/backups",

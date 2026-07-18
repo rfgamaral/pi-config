@@ -140,7 +140,7 @@ export type NotifyFn = (msg: string, level: 'info' | 'warning' | 'error') => voi
 export const DEFAULT_TARGET: ReflectTarget = {
     path: '',
     schedule: 'daily',
-    model: 'anthropic/claude-sonnet-4-5',
+    model: 'anthropic/claude-sonnet-5',
     lookbackDays: 1,
     maxSessionBytes: 600 * 1024,
     backupDir: DEFAULT_BACKUP_DIR,
