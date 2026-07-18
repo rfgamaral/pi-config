@@ -48,9 +48,10 @@ The repo includes its own set of extensions, skills, and prompts, also exported 
 
 ### Prompts
 
-|     | Prompt                                        | Description                                                                                           |
-| --- | --------------------------------------------- | ----------------------------------------------------------------------------------------------------- |
-| ●   | [`rebase-on-main`](prompts/rebase-on-main.md) | Rebase current branch onto main with automatic stashing, conflict resolution, and optional force-push |
+|     | Prompt                                                    | Description                                                                                           |
+| --- | --------------------------------------------------------- | ----------------------------------------------------------------------------------------------------- |
+| ●   | [`explain-pull-request`](prompts/explain-pull-request.md) | Explain a GitHub PR in plain language with Mermaid diagrams as a themed HTML report                   |
+| ●   | [`rebase-on-main`](prompts/rebase-on-main.md)             | Rebase current branch onto main with automatic stashing, conflict resolution, and optional force-push |
 
 ## Community Packages
 
@@ -59,10 +60,10 @@ In addition to the included packages, the setup relies on these community [Pi pa
 | Package                                                                                | Description                                                                              |
 | -------------------------------------------------------------------------------------- | ---------------------------------------------------------------------------------------- |
 | [`pi-autoresearch`](https://pi.dev/packages/pi-autoresearch)                           | Autonomous experiment loop: try ideas, benchmark, keep wins, revert regressions          |
+| [`pi-anthropic-auth`](https://pi.dev/packages/@gotgenes/pi-anthropic-auth)             | Anthropic OAuth compatibility for Pi                                                     |
 | [`pi-context7`](https://pi.dev/packages/@dreki-gg/pi-context7)                         | Pi-native Context7 docs lookup with direct HTTP, cache, and raw-doc retrieval            |
 | [`pi-copy-user-message`](https://pi.dev/packages/pi-copy-user-message)                 | Slash command to copy the most recent user message to the clipboard                      |
 | [`pi-github`](https://pi.dev/packages/pi-github)                                       | GitHub toolkit for Pi with thread formatting, PR inspection, and repo search             |
-| [`pi-gpt-config`](https://github.com/edxeth/pi-gpt-config)                             | Codex-parity settings panel for supported OpenAI models                                  |
 | [`pi-guardrails`](https://pi.dev/packages/@aliou/pi-guardrails)                        | Security hooks to reduce accidental destructive actions and secret access                |
 | [`pi-intercom`](https://pi.dev/packages/pi-intercom)                                   | Coordination channel for subagents to talk back to the parent session for decisions      |
 | [`pi-mcp-adapter`](https://pi.dev/packages/pi-mcp-adapter)                             | Adapter to run MCP (Model Context Protocol) servers as Pi extensions                     |
@@ -70,6 +71,7 @@ In addition to the included packages, the setup relies on these community [Pi pa
 | [`pi-subagents`](https://pi.dev/packages/pi-subagents)                                 | Role-based subagents with chains, parallel fan-out, review loops, and worktree isolation |
 | [`pi-tool-display`](https://pi.dev/packages/pi-tool-display)                           | OpenCode-style tool rendering for Pi with compact output and richer diffs                |
 | [`pi-usage-extension`](https://pi.dev/packages/@tmustier/pi-usage-extension)           | Dashboard with aggregated usage statistics across all sessions                           |
+| [`pi-web-access`](https://pi.dev/packages/pi-web-access)                               | Web search, URL fetch, GitHub repo cloning, and PDF/YouTube/video extraction             |
 | [`rpiv-ask-user-question`](https://pi.dev/packages/@juicesharp/rpiv-ask-user-question) | Structured clarifying questions with a tabbed dialog and side-by-side previews           |
 | [`rpiv-btw`](https://pi.dev/packages/@juicesharp/rpiv-btw)                             | Side-question panel backed by a read-only clone of the conversation                      |
 | [`rpiv-todo`](https://pi.dev/packages/@juicesharp/rpiv-todo)                           | Persistent todo list that survives reloads and conversation compaction                   |
