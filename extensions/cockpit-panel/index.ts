@@ -13,8 +13,11 @@ import { basename, join } from 'node:path'
 // Constants
 // -----------------------------------------------------------------------------
 
-/** Path to the extension's global config file. */
-const CONFIG_PATH = join(getAgentDir(), 'extensions', 'cockpit-panel.json')
+/** Path to the shared config file for this repo's custom extensions. */
+const CONFIG_PATH = join(getAgentDir(), 'extensions.json')
+
+/** Key for this extension's section in the shared config file. */
+const CONFIG_KEY = 'cockpitPanel'
 
 /** Default extension configuration. */
 const DEFAULT_CONFIG = {
@@ -116,10 +119,15 @@ type CockpitPanelState = {
 // Config functions
 // -----------------------------------------------------------------------------
 
-/** Read the extension config file, returning an empty object on read or parse errors. */
+/** Read this extension's section from the shared config file, empty on errors. */
 function readConfigFile(): Partial<CockpitPanelConfig> {
     try {
-        return JSON.parse(readFileSync(CONFIG_PATH, 'utf-8')) as Partial<CockpitPanelConfig>
+        const parsed = JSON.parse(readFileSync(CONFIG_PATH, 'utf-8')) as Record<string, unknown>
+        const section = parsed[CONFIG_KEY]
+
+        return section !== null && typeof section === 'object'
+            ? (section as Partial<CockpitPanelConfig>)
+            : {}
     } catch {
         return {}
     }

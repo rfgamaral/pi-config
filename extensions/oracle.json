@@ -1,4 +1,0 @@
-{
-    "models": ["anthropic/claude-opus-4-8", "openai-codex/gpt-5.6-sol"],
-    "maxThinking": "auto"
-}

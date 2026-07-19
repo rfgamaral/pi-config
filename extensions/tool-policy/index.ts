@@ -6,11 +6,11 @@ import { join } from 'node:path'
 // Constants
 // -----------------------------------------------------------------------------
 
-/** Key used in Pi's global settings file for this extension. */
-const CONFIG_KEY = 'tool-policy'
+/** Path to the shared config file for this repo's custom extensions. */
+const CONFIG_PATH = join(getAgentDir(), 'extensions.json')
 
-/** Path to Pi's global settings file. */
-const SETTINGS_PATH = join(getAgentDir(), 'settings.json')
+/** Key for this extension's section in the shared config file. */
+const CONFIG_KEY = 'toolPolicy'
 
 /** Default extension configuration. */
 const DEFAULT_CONFIG = {
@@ -21,7 +21,7 @@ const DEFAULT_CONFIG = {
 // Types
 // -----------------------------------------------------------------------------
 
-/** Extension configuration loaded from Pi settings. */
+/** Extension configuration loaded from the shared config file. */
 type ToolPolicyConfig = {
     disabledTools: string[]
 }
@@ -29,17 +29,6 @@ type ToolPolicyConfig = {
 // -----------------------------------------------------------------------------
 // Config functions
 // -----------------------------------------------------------------------------
-
-/** Read Pi's global settings file, returning an empty object on read or parse errors. */
-function readSettingsFile(): Record<string, unknown> {
-    try {
-        const parsed = JSON.parse(readFileSync(SETTINGS_PATH, 'utf-8'))
-
-        return typeof parsed === 'object' && parsed !== null ? parsed : {}
-    } catch {
-        return {}
-    }
-}
 
 /** Return a clean, de-duplicated list of tool names from a raw config value. */
 function normalizeToolList(value: unknown): string[] {
@@ -55,17 +44,26 @@ function normalizeToolList(value: unknown): string[] {
     return [...new Set(tools)]
 }
 
-/** Load extension config from Pi settings with defaults applied. */
-function loadConfig(): ToolPolicyConfig {
-    const settings = readSettingsFile()
-    const config = settings[CONFIG_KEY]
+/** Read this extension's section from the shared config file, empty on errors. */
+function readConfigFile(): Partial<ToolPolicyConfig> {
+    try {
+        const parsed = JSON.parse(readFileSync(CONFIG_PATH, 'utf-8')) as Record<string, unknown>
+        const section = parsed[CONFIG_KEY]
 
-    if (!config || typeof config !== 'object') {
-        return DEFAULT_CONFIG
+        return section !== null && typeof section === 'object'
+            ? (section as Partial<ToolPolicyConfig>)
+            : {}
+    } catch {
+        return {}
     }
+}
+
+/** Load extension config from the shared config file with defaults applied. */
+function loadConfig(): ToolPolicyConfig {
+    const config = readConfigFile()
 
     return {
-        disabledTools: normalizeToolList((config as { disabledTools?: unknown }).disabledTools),
+        disabledTools: normalizeToolList(config.disabledTools),
     }
 }
 
@@ -108,7 +106,7 @@ export default function (pi: ExtensionAPI) {
         if (disabled.has(event.toolName)) {
             return {
                 block: true,
-                reason: `Tool \`${event.toolName}\` is disabled by ${CONFIG_KEY}.`,
+                reason: `Tool \`${event.toolName}\` is disabled by the tool-policy extension.`,
             }
         }
     })

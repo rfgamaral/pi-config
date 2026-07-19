@@ -1,0 +1,29 @@
+{
+    "autoSessionName": {
+        "model": "openai-codex/gpt-5.4-mini",
+        "renameOnCompaction": "on"
+    },
+    "cockpitPanel": {
+        "gitPollInterval": 5000,
+        "prPollInterval": 30000,
+        "workspaceProfiles": {
+            "nameOverrides": {
+                "/.pi/agent": "Pi",
+                "doist-os": "DoistOS",
+                "todoist-web": "Todoist Web",
+                "twist-web": "Twist Web"
+            },
+            "colors": {
+                "todoist": "#e06155",
+                "twist": "#22a5bf"
+            }
+        }
+    },
+    "oracle": {
+        "models": ["anthropic/claude-opus-4-8", "openai-codex/gpt-5.6-sol"],
+        "maxThinking": "auto"
+    },
+    "toolPolicy": {
+        "disabledTools": ["fetch_content"]
+    }
+}

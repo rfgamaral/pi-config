@@ -88,18 +88,20 @@ The event is only emitted when a custom project color is active. Extensions shou
 
 ## Configuration
 
-Edit `~/.pi/agent/extensions/cockpit-panel.json` to customize behavior.
+Edit `~/.pi/agent/extensions.json` (under the `cockpitPanel` key) to customize behavior.
 
 ```json
 {
-    "gitPollInterval": 5000,
-    "prPollInterval": 30000,
-    "workspaceProfiles": {
-        "nameOverrides": {
-            "/.pi/agent": "Pi"
-        },
-        "colors": {
-            "todoist": "#e06155"
+    "cockpitPanel": {
+        "gitPollInterval": 5000,
+        "prPollInterval": 30000,
+        "workspaceProfiles": {
+            "nameOverrides": {
+                "/.pi/agent": "Pi"
+            },
+            "colors": {
+                "todoist": "#e06155"
+            }
         }
     }
 }

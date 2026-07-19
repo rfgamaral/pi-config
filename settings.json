@@ -47,11 +47,6 @@
     "showTerminalProgress": true
   },
   "theme": "dark",
-  "tool-policy": {
-    "disabledTools": [
-      "fetch_content"
-    ]
-  },
   "warnings": {
     "anthropicExtraUsage": false
   }

@@ -13,11 +13,11 @@ Pi activates tools by name, so Tool Policy is intentionally name-based. If a too
 
 ## Configuration
 
-Edit `~/.pi/agent/settings.json`:
+Edit `~/.pi/agent/extensions.json`:
 
 ```json
 {
-    "tool-policy": {
+    "toolPolicy": {
         "disabledTools": ["fetch_content"]
     }
 }

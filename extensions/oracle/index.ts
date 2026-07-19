@@ -26,8 +26,11 @@ import { join, resolve } from 'node:path'
 // Constants
 // -----------------------------------------------------------------------------
 
-/** Path to the extension's global config file. */
-const CONFIG_PATH = join(getAgentDir(), 'extensions', 'oracle.json')
+/** Path to the shared config file for this repo's custom extensions. */
+const CONFIG_PATH = join(getAgentDir(), 'extensions.json')
+
+/** Key for this extension's section in the shared config file. */
+const CONFIG_KEY = 'oracle'
 
 /** Default extension configuration. */
 const DEFAULT_CONFIG = {
@@ -108,10 +111,15 @@ type CockpitStyle = {
 // Config functions
 // -----------------------------------------------------------------------------
 
-/** Read the extension config file, returning an empty object on read or parse errors. */
+/** Read this extension's section from the shared config file, empty on errors. */
 function readConfigFile(): Partial<OracleConfig> {
     try {
-        return JSON.parse(readFileSync(CONFIG_PATH, 'utf-8')) as Partial<OracleConfig>
+        const parsed = JSON.parse(readFileSync(CONFIG_PATH, 'utf-8')) as Record<string, unknown>
+        const section = parsed[CONFIG_KEY]
+
+        return section !== null && typeof section === 'object'
+            ? (section as Partial<OracleConfig>)
+            : {}
     } catch {
         return {}
     }
@@ -772,7 +780,7 @@ function registerOracleExtension(pi: ExtensionAPI): void {
                     ? `Model "${modelArg}" not found or unavailable.`
                     : 'No alternative models available.'
 
-                ctx.ui.notify(`${hint} Check oracle.json and model auth.`, 'error')
+                ctx.ui.notify(`${hint} Check the oracle config and model auth.`, 'error')
                 return
             }
 
