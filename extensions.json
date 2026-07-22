@@ -23,6 +23,10 @@
         "models": ["anthropic/claude-opus-4-8", "openai-codex/gpt-5.6-sol"],
         "maxThinking": "auto"
     },
+    "sessionDefaults": {
+        "model": "anthropic/claude-opus-4-8",
+        "thinking": "high"
+    },
     "toolPolicy": {
         "disabledTools": ["fetch_content"]
     }
