@@ -30,7 +30,7 @@
     "npm:@dreki-gg/pi-context7",
     "npm:@gotgenes/pi-anthropic-auth",
     "npm:@juicesharp/rpiv-ask-user-question",
-    "npm:@juicesharp/rpiv-todo",
+    "npm:@tintinweb/pi-tasks",
     "npm:@tmustier/pi-usage-extension",
     "npm:pi-autoresearch",
     "npm:pi-copy-user-message",
