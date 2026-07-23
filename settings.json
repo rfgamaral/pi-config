@@ -25,6 +25,7 @@
     "npm"
   ],
   "packages": [
+    "git:github.com/jonjonrankin/pi-caveman",
     "git:github.com/obra/superpowers",
     "npm:@aliou/pi-guardrails",
     "npm:@dreki-gg/pi-context7",
