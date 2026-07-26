@@ -34,7 +34,7 @@ const CONFIG_KEY = 'oracle'
 
 /** Default extension configuration. */
 const DEFAULT_CONFIG = {
-    models: ['anthropic/claude-opus-4-8', 'openai-codex/gpt-5.6-sol'],
+    models: ['anthropic/claude-opus-5', 'openai-codex/gpt-5.6-sol'],
     maxThinking: 'auto' as const,
 }
 

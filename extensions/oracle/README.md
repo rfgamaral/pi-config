@@ -39,16 +39,16 @@ Edit `~/.pi/agent/extensions.json` (under the `oracle` key):
 ```json
 {
     "oracle": {
-        "models": ["anthropic/claude-opus-4-8", "openai-codex/gpt-5.6-sol"],
+        "models": ["anthropic/claude-opus-5", "openai-codex/gpt-5.6-sol"],
         "maxThinking": "auto"
     }
 }
 ```
 
-| Setting       | Default                                                     | Description                                                                                  |
-| ------------- | ----------------------------------------------------------- | -------------------------------------------------------------------------------------------- |
-| `models`      | `["anthropic/claude-opus-4-8", "openai-codex/gpt-5.6-sol"]` | Ranked list of models to consult. The first available non-current model is used.             |
-| `maxThinking` | `auto`                                                      | Starting thinking level, or `auto` for Oracle's highest guess. Falls back lower if rejected. |
+| Setting       | Default                                                   | Description                                                                                  |
+| ------------- | --------------------------------------------------------- | -------------------------------------------------------------------------------------------- |
+| `models`      | `["anthropic/claude-opus-5", "openai-codex/gpt-5.6-sol"]` | Ranked list of models to consult. The first available non-current model is used.             |
+| `maxThinking` | `auto`                                                    | Starting thinking level, or `auto` for Oracle's highest guess. Falls back lower if rejected. |
 
 Oracle picks the first entry that exists in Pi's model registry, has a valid API key, and is not the model currently in use. Models are compared by ID, so the same model from a different provider (e.g., Copilot Opus vs Anthropic Opus) is still skipped.
 

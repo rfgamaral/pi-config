@@ -21,7 +21,7 @@ Edit `~/.pi/agent/extensions.json`:
 ```json
 {
     "sessionDefaults": {
-        "model": "anthropic/claude-opus-4-8",
+        "model": "anthropic/claude-opus-5",
         "thinking": "high"
     }
 }

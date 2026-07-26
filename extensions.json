@@ -20,11 +20,11 @@
         }
     },
     "oracle": {
-        "models": ["anthropic/claude-opus-4-8", "openai-codex/gpt-5.6-sol"],
+        "models": ["anthropic/claude-opus-5", "openai-codex/gpt-5.6-sol"],
         "maxThinking": "auto"
     },
     "sessionDefaults": {
-        "model": "anthropic/claude-opus-4-8",
+        "model": "anthropic/claude-opus-5",
         "thinking": "high"
     },
     "toolPolicy": {
