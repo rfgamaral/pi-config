@@ -25,7 +25,7 @@
     },
     "sessionDefaults": {
         "model": "anthropic/claude-opus-5",
-        "thinking": "high"
+        "thinking": "xhigh"
     },
     "toolPolicy": {
         "disabledTools": ["fetch_content"]

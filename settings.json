@@ -6,7 +6,7 @@
   },
   "defaultModel": "claude-opus-5",
   "defaultProvider": "anthropic",
-  "defaultThinkingLevel": "high",
+  "defaultThinkingLevel": "xhigh",
   "enabledModels": [
     "openai-codex/gpt-5.4-mini",
     "openai-codex/gpt-5.6-luna",
