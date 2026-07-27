@@ -17,6 +17,14 @@
     "anthropic/claude-opus-5",
     "anthropic/claude-fable-5"
   ],
+  "gptConfig": {
+    "fastMode": true,
+    "personality": "none",
+    "showFooter": false,
+    "summary": "none",
+    "toolDiscipline": "off",
+    "verbosity": "low"
+  },
   "hideThinkingBlock": true,
   "npmCommand": [
     "fnm",
@@ -26,6 +34,7 @@
   ],
   "packages": [
     "git:github.com/DietrichGebert/ponytail",
+    "git:github.com/edxeth/pi-gpt-config",
     "git:github.com/jonjonrankin/pi-caveman",
     "git:github.com/obra/superpowers",
     "npm:@aliou/pi-guardrails",
