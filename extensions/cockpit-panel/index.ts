@@ -658,11 +658,15 @@ async function handleSessionStart(
         invalidate() {},
     }))
 
-    const detectedName = await detectProjectName(ctx.cwd)
-    const git = await detectGitInfo(ctx.cwd)
+    // Read the working directory once: the context is unusable after the session is replaced,
+    // and the polling timers below outlive it
+    const cwd = ctx.cwd
+
+    const detectedName = await detectProjectName(cwd)
+    const git = await detectGitInfo(cwd)
     const config = loadConfig()
 
-    const displayName = matchKey(config.workspaceProfiles.nameOverrides, ctx.cwd) ?? detectedName
+    const displayName = matchKey(config.workspaceProfiles.nameOverrides, cwd) ?? detectedName
     const hex = matchKey(config.workspaceProfiles.colors, detectedName)
 
     let editorRef: BoxEditor | null = null
@@ -719,7 +723,7 @@ async function handleSessionStart(
     let prInfo: PrInfo | null = null
     let tuiRef: { requestRender: () => void } | null = null
 
-    fetchPrInfo(ctx.cwd).then((pr) => {
+    fetchPrInfo(cwd).then((pr) => {
         prInfo = pr
         tuiRef?.requestRender()
     })
@@ -727,7 +731,7 @@ async function handleSessionStart(
     clearPollingTimers(state)
 
     state.gitPollTimer = setInterval(async () => {
-        const updatedGit = await detectGitInfo(ctx.cwd)
+        const updatedGit = await detectGitInfo(cwd)
 
         if (editorRef) {
             editorRef.gitSuffix = buildGitSuffix(updatedGit)
@@ -736,7 +740,7 @@ async function handleSessionStart(
     }, config.gitPollInterval)
 
     state.prPollTimer = setInterval(async () => {
-        prInfo = await fetchPrInfo(ctx.cwd)
+        prInfo = await fetchPrInfo(cwd)
         tuiRef?.requestRender()
     }, config.prPollInterval)
 
