@@ -1,5 +1,5 @@
 {
-  "lastChangelogVersion": "0.82.1",
+  "lastChangelogVersion": "0.83.0",
   "collapseChangelog": true,
   "compaction": {
     "enabled": true
@@ -35,7 +35,6 @@
   "packages": [
     "git:github.com/DietrichGebert/ponytail",
     "git:github.com/edxeth/pi-gpt-config",
-    "git:github.com/jonjonrankin/pi-caveman",
     "git:github.com/obra/superpowers",
     "npm:@aliou/pi-guardrails",
     "npm:@dreki-gg/pi-context7",
