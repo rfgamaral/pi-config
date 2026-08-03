@@ -37,7 +37,6 @@
     "git:github.com/edxeth/pi-gpt-config",
     "git:github.com/obra/superpowers",
     "npm:@aliou/pi-guardrails",
-    "npm:@dreki-gg/pi-context7",
     "npm:@gotgenes/pi-anthropic-auth",
     "npm:@juicesharp/rpiv-ask-user-question",
     "npm:@tintinweb/pi-subagents",
@@ -48,7 +47,6 @@
     "npm:pi-github",
     "npm:pi-intercom",
     "npm:pi-mcp-adapter",
-    "npm:pi-smart-fetch",
     "npm:pi-tool-display",
     "npm:pi-web-access"
   ],

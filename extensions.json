@@ -26,8 +26,5 @@
     "sessionDefaults": {
         "model": "openai-codex/gpt-5.6-sol",
         "thinking": "xhigh"
-    },
-    "toolPolicy": {
-        "disabledTools": ["fetch_content"]
     }
 }
