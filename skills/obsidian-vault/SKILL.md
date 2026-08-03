@@ -46,7 +46,7 @@ Obsidian/
 ## Operations Quick Reference
 
 | Task                 | How                                                                                                                                     |
-| -------------------- | --------------------------------------------------------------------------------------------------------------------------------------- | -------- | --- | --------------------------------- |
+| -------------------- | --------------------------------------------------------------------------------------------------------------------------------------- |
 | Find notes           | `find ~/Documents/Obsidian/ -name "*.md" -not -path "*/.obsidian/*"`                                                                    |
 | Search content       | `rg "query" ~/Documents/Obsidian/ --glob "!.obsidian"`                                                                                  |
 | Read a note          | Read tool with the file path                                                                                                            |
@@ -56,6 +56,6 @@ Obsidian/
 | Recent notes (macOS) | `find ~/Documents/Obsidian/ -name "*.md" -not -path "*/.obsidian/*" -mtime -7 -exec stat -f "%m %N" {} + \| sort -rn \| cut -d' ' -f2-` |
 | Backlinks            | `rg "Note Name" ~/Documents/Obsidian/ --glob "!.obsidian" -l`                                                                           |
 | Vault overview       | `find ~/Documents/Obsidian/ -type d -not -path "*/.obsidian/*"`                                                                         |
-| Notes per folder     | `find ~/Documents/Obsidian/ -name "_.md" -not -path "_/.obsidian/\*" \| sed 's                                                          | /[^/]\*$ |     | ' \| sort \| uniq -c \| sort -rn` |
+| Notes per folder     | `find ~/Documents/Obsidian/ -name "*.md" -not -path "*/.obsidian/*" \| sed 's#/[^/]*$##' \| sort \| uniq -c \| sort -rn`                |
 | Find todos           | `rg "\- \[ \]" ~/Documents/Obsidian/ --glob "!.obsidian"`                                                                               |
 | Find tags            | `rg "#[\w][\w/-]+" ~/Documents/Obsidian/ --glob "!.obsidian" -o \| sort \| uniq -c \| sort -rn`                                         |
