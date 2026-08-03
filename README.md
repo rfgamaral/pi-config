@@ -34,8 +34,6 @@ The repo includes its own set of extensions, skills, and prompts, also exported 
 | ⑂   | [`clipboard-image`](extensions/clipboard-image)     | Clipboard image paste for WSL with format conversion, resize, and in-memory attachment via `Alt+V`                         |
 | ●   | [`cockpit-panel`](extensions/cockpit-panel)         | Custom editor with rounded-box border, per-project colors, git status, GitHub PR checks, and model/context usage widget    |
 | ⑂   | [`oracle`](extensions/oracle)                       | Second opinion from an alternate model with ranked auto-selection, automatic thinking caps, and optional context injection |
-| ⑂   | [`pi-mem`](extensions/pi-mem)                       | Daily memory for Pi with long-term notes, daily logs, scratchpad, and automatic context injection                          |
-| ⑂   | [`pi-reflect`](extensions/pi-reflect)               | Iterative reflection for Pi that analyzes recent sessions and updates behavioral files and memory                          |
 | ●   | [`session-defaults`](extensions/session-defaults)   | Sets the model and thinking level for each fresh persistent Pi session                                                     |
 | ⑂   | [`whimsical`](extensions/whimsical)                 | Random short whimsical working messages for Pi's interactive TUI                                                           |
 
@@ -59,8 +57,8 @@ In addition to the included packages, the setup relies on these community [Pi pa
 
 | Package                                                                                | Description                                                                             |
 | -------------------------------------------------------------------------------------- | --------------------------------------------------------------------------------------- |
-| [`pi-autoresearch`](https://pi.dev/packages/pi-autoresearch)                           | Autonomous experiment loop: try ideas, benchmark, keep wins, revert regressions         |
 | [`pi-anthropic-auth`](https://pi.dev/packages/@gotgenes/pi-anthropic-auth)             | Anthropic OAuth compatibility for Pi                                                    |
+| [`pi-autoresearch`](https://pi.dev/packages/pi-autoresearch)                           | Autonomous experiment loop: try ideas, benchmark, keep wins, revert regressions         |
 | [`pi-copy-user-message`](https://pi.dev/packages/pi-copy-user-message)                 | Slash command to copy the most recent user message to the clipboard                     |
 | [`pi-github`](https://pi.dev/packages/pi-github)                                       | GitHub toolkit for Pi with thread formatting, PR inspection, and repo search            |
 | [`pi-guardrails`](https://pi.dev/packages/@aliou/pi-guardrails)                        | Security hooks to reduce accidental destructive actions and secret access               |

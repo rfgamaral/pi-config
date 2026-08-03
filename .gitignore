@@ -13,8 +13,6 @@ bin/
 
 # Pi runtime data
 intercom/
-memory/
-reflect/
 sessions/
 models-store.json
 
