@@ -29,8 +29,8 @@
     "devDependencies": {
         "@earendil-works/pi-coding-agent": "*",
         "@earendil-works/pi-tui": "*",
-        "lefthook": "2.1.4",
-        "oxfmt": "0.42.0",
-        "typescript": "6.0.2"
+        "lefthook": "2.1.10",
+        "oxfmt": "0.62.0",
+        "typescript": "7.0.2"
     }
 }

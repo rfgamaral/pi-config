@@ -1,4 +1,4 @@
-import { complete, type Model, type Api } from '@earendil-works/pi-ai'
+import { type AssistantMessage, type Provider, type Model, type Api } from '@earendil-works/pi-ai'
 import {
     buildSessionContext,
     getAgentDir,
@@ -83,6 +83,7 @@ type AutoSessionNameConfig = {
 /** Resolved model with auth info ready for API calls. */
 type ResolvedModel = {
     model: Model<Api>
+    provider: Provider
     apiKey: string
     headers?: Record<string, string>
 }
@@ -144,8 +145,9 @@ async function resolveModel(
     }
 
     const model = ctx.modelRegistry.find(provider, modelId)
+    const runtimeProvider = ctx.modelRegistry.getProvider(provider)
 
-    if (!model) {
+    if (!model || !runtimeProvider) {
         return null
     }
 
@@ -155,7 +157,7 @@ async function resolveModel(
         return null
     }
 
-    return { model, apiKey: auth.apiKey, headers: auth.headers }
+    return { model, provider: runtimeProvider, apiKey: auth.apiKey, headers: auth.headers }
 }
 
 /** Return true for text content blocks. */
@@ -315,7 +317,7 @@ function splitDigestIntoChunks(digest: string): string[] {
 }
 
 /** Extract text from an assistant response. */
-function extractResponseText(response: Awaited<ReturnType<typeof complete>>): string {
+function extractResponseText(response: AssistantMessage): string {
     return response.content
         .filter((content): content is { type: 'text'; text: string } => content.type === 'text')
         .map((content) => content.text)
@@ -333,32 +335,34 @@ async function summarizeDigestChunk(
     maxSummaryLength: number,
     signal?: AbortSignal,
 ): Promise<string | null> {
-    const response = await complete(
-        resolved.model,
-        {
-            systemPrompt: NAMING_DIGEST_PROMPT,
-            messages: [
-                {
-                    role: 'user' as const,
-                    content: [
-                        {
-                            type: 'text' as const,
-                            text:
-                                `Conversation slice ${index + 1} of ${total}:\n\n` +
-                                `<conversation-slice>\n${chunk}\n</conversation-slice>`,
-                        },
-                    ],
-                    timestamp: Date.now(),
-                },
-            ],
-        },
-        {
-            apiKey: resolved.apiKey,
-            headers: resolved.headers,
-            maxTokens: 800,
-            signal,
-        },
-    )
+    const response = await resolved.provider
+        .stream(
+            resolved.model,
+            {
+                systemPrompt: NAMING_DIGEST_PROMPT,
+                messages: [
+                    {
+                        role: 'user' as const,
+                        content: [
+                            {
+                                type: 'text' as const,
+                                text:
+                                    `Conversation slice ${index + 1} of ${total}:\n\n` +
+                                    `<conversation-slice>\n${chunk}\n</conversation-slice>`,
+                            },
+                        ],
+                        timestamp: Date.now(),
+                    },
+                ],
+            },
+            {
+                apiKey: resolved.apiKey,
+                headers: resolved.headers,
+                maxTokens: 800,
+                signal,
+            },
+        )
+        .result()
 
     const summary = extractResponseText(response)
 
@@ -436,24 +440,26 @@ async function generateName(
         userPrompt += `\n\nCurrent session title: "${currentName}"`
     }
 
-    const response = await complete(
-        resolved.model,
-        {
-            systemPrompt: currentName ? RENAME_PROMPT : NAMING_PROMPT,
-            messages: [
-                {
-                    role: 'user' as const,
-                    content: [{ type: 'text' as const, text: userPrompt }],
-                    timestamp: Date.now(),
-                },
-            ],
-        },
-        {
-            apiKey: resolved.apiKey,
-            headers: resolved.headers,
-            signal: ctx.signal,
-        },
-    )
+    const response = await resolved.provider
+        .stream(
+            resolved.model,
+            {
+                systemPrompt: currentName ? RENAME_PROMPT : NAMING_PROMPT,
+                messages: [
+                    {
+                        role: 'user' as const,
+                        content: [{ type: 'text' as const, text: userPrompt }],
+                        timestamp: Date.now(),
+                    },
+                ],
+            },
+            {
+                apiKey: resolved.apiKey,
+                headers: resolved.headers,
+                signal: ctx.signal,
+            },
+        )
+        .result()
 
     const name = extractResponseText(response)
 

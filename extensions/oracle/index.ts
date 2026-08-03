@@ -1,7 +1,7 @@
 import {
-    completeSimple,
     getSupportedThinkingLevels,
     type UserMessage,
+    type Provider,
     type Model,
     type Api,
 } from '@earendil-works/pi-ai'
@@ -96,6 +96,7 @@ type AvailableModel = {
     modelId: string
     name: string
     model: Model<Api>
+    runtimeProvider: Provider
     apiKey?: string
     headers?: Record<string, string>
 }
@@ -276,8 +277,9 @@ function resolveModel(
         }
 
         const model = ctx.modelRegistry.find(candidate.provider, candidate.modelId)
+        const runtimeProvider = ctx.modelRegistry.getProvider(candidate.provider)
 
-        if (!model) {
+        if (!model || !runtimeProvider) {
             continue
         }
 
@@ -290,6 +292,7 @@ function resolveModel(
             modelId: candidate.modelId,
             name: `${candidate.provider}/${candidate.modelId}`,
             model,
+            runtimeProvider,
         }
     }
 
@@ -434,19 +437,21 @@ async function executeOracle(
                             cachedWidth = 0
                             tui.requestRender()
 
-                            const response = await completeSimple(
-                                model.model,
-                                {
-                                    systemPrompt: ORACLE_SYSTEM_PROMPT,
-                                    messages: [userMessage],
-                                },
-                                {
-                                    apiKey: model.apiKey,
-                                    headers: model.headers,
-                                    signal: abortController.signal,
-                                    reasoning: level === 'off' ? undefined : level,
-                                },
-                            )
+                            const response = await model.runtimeProvider
+                                .streamSimple(
+                                    model.model,
+                                    {
+                                        systemPrompt: ORACLE_SYSTEM_PROMPT,
+                                        messages: [userMessage],
+                                    },
+                                    {
+                                        apiKey: model.apiKey,
+                                        headers: model.headers,
+                                        signal: abortController.signal,
+                                        reasoning: level === 'off' ? undefined : level,
+                                    },
+                                )
+                                .result()
 
                             if (response.stopReason === 'aborted') {
                                 throw new OracleAbortedError()
