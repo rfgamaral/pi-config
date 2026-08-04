@@ -4,6 +4,10 @@ Superpowers is OPT-IN. Do not invoke any Superpowers skill unless I explicitly a
 
 For normal tasks, implement directly and run proportional verification. Do not create specs or implementation plans, or request design approval, unless explicitly requested.
 
+## Workspace
+
+When I mention a project by name or folder name, find its unique matching directory under `~/Workspace` and work there, even if the session started elsewhere. Ask only when no unique match exists.
+
 ## Development
 
 ### Universal guidelines
