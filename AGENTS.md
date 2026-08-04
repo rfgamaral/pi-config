@@ -1,3 +1,9 @@
+## Superpowers
+
+Superpowers is OPT-IN. Do not invoke any Superpowers skill unless I explicitly ask to use Superpowers. This instruction overrides any Superpowers text requiring mandatory or automatic invocation.
+
+For normal tasks, implement directly and run proportional verification. Do not create specs or implementation plans, or request design approval, unless explicitly requested.
+
 ## Development
 
 ### Universal guidelines
