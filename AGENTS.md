@@ -8,22 +8,9 @@ For normal tasks, implement directly and run proportional verification. Do not c
 
 ### Universal guidelines
 
-- If the repo has its own `AGENTS.md`, read it and follow it.
-- Before changing code, check the repo conventions for:
-    - commit message style
-    - code style
-    - contribution guidelines
-    - package manager and task runner usage
-    - required lint, test, and verification steps
-    - any repo-specific workflow or setup docs
-- When creating PRs, follow the project's PR template if one exists (`.github/PULL_REQUEST_TEMPLATE.md`):
-    - Strip sections that aren't relevant to the PR.
-    - Write descriptions in concise prose. Use lists only when enumerating distinct items.
-    - Describe the feature or bug, not implementation details.
-    - Link the motivating discussion/thread when there is one.
-    - Only add a technical details section when the code changes aren't self-explanatory.
-- When a mechanical fix (lint, compiler, codemod) cascades into a new violation, stop and present options (keep partial / revert / continue) before chasing the cascade. Don't silently expand scope.
-- When I say "commit", create a new commit on top of the current branch. Only amend the previous commit when I explicitly say "amend".
+- Before editing code, identify and follow the repository’s development conventions, tooling, and required checks, including contribution docs, package/task runners, and lint/test commands.
+- If a mechanical fix triggers additional violations, stop and ask whether to keep the partial fix, revert it, or continue; never expand scope silently.
+- “Commit” means create a new commit on top of `HEAD`; “amend” means amend `HEAD`. Never amend unless I explicitly say “amend”.
 
 ### Doist-specific guidelines
 
