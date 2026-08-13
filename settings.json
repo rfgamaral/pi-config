@@ -1,5 +1,5 @@
 {
-  "lastChangelogVersion": "0.83.0",
+  "lastChangelogVersion": "0.84.1",
   "collapseChangelog": true,
   "compaction": {
     "enabled": true
@@ -46,6 +46,7 @@
     "npm:pi-github",
     "npm:pi-intercom",
     "npm:pi-mcp-adapter",
+    "npm:pi-memory",
     "npm:pi-tool-display",
     "npm:pi-web-access"
   ],
