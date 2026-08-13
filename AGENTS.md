@@ -18,6 +18,11 @@ When I mention a project by name or folder name, find its unique matching direct
 - If a mechanical fix triggers additional violations, stop and ask whether to keep the partial fix, revert it, or continue; never expand scope silently.
 - “Commit” means create a new commit on top of `HEAD`; “amend” means amend `HEAD`. Never amend unless I explicitly say “amend”.
 
+### Code style
+
+- Write JSDoc as multiline blocks and fill lines up to, but never past, column 100. Separate the description and different tag groups with blank lines; keep tags of the same kind together.
+- Match nearby documentation: do not document new props or variables unless their peers are documented.
+
 ### Doist-specific guidelines
 
 - For repos under `~/Workspace/Doist/`, prefix branch names with `ricardo/`.
