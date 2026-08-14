@@ -8,12 +8,16 @@
         "prPollInterval": 30000,
         "workspaceProfiles": {
             "nameOverrides": {
-                "/.pi/agent": "Pi",
+                "/.pi/agent": "Pi Coding Agent",
+                "comms-backend": "[Backend] Comms",
+                "comms-web": "[Web] Comms",
                 "doist-os": "DoistOS",
-                "todoist-web": "Todoist Web",
-                "twist-web": "Twist Web"
+                "Todoist": "[Backend] Todoist",
+                "todoist-web": "[Web] Todoist",
+                "twist-web": "[Web] Twist"
             },
             "colors": {
+                "comms": "#766bbd",
                 "todoist": "#e06155",
                 "twist": "#22a5bf"
             }
