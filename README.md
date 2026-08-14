@@ -35,6 +35,7 @@ The repo includes its own set of extensions, skills, and prompts, also exported 
 | ●   | [`cockpit-panel`](extensions/cockpit-panel)         | Custom editor with rounded-box border, per-project colors, git status, GitHub PR checks, and model/context usage widget    |
 | ⑂   | [`oracle`](extensions/oracle)                       | Second opinion from an alternate model with ranked auto-selection, automatic thinking caps, and optional context injection |
 | ●   | [`session-defaults`](extensions/session-defaults)   | Sets the model and thinking level for each fresh persistent Pi session                                                     |
+| ●   | [`session-favorites`](extensions/session-favorites) | Manage favorite sessions and resume them through Pi's standard session picker                                              |
 | ⑂   | [`whimsical`](extensions/whimsical)                 | Random short whimsical working messages for Pi's interactive TUI                                                           |
 
 ### Skills
