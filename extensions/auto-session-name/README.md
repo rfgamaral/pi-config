@@ -27,7 +27,7 @@ Edit `~/.pi/agent/extensions.json` (under the `autoSessionName` key):
 ```json
 {
     "autoSessionName": {
-        "model": "openai-codex/gpt-5.4-mini",
+        "model": "openai-codex/gpt-5.6-luna",
         "renameOnCompaction": "on"
     }
 }
@@ -35,7 +35,7 @@ Edit `~/.pi/agent/extensions.json` (under the `autoSessionName` key):
 
 | Setting              | Default                     | Description                                              |
 | -------------------- | --------------------------- | -------------------------------------------------------- |
-| `model`              | `openai-codex/gpt-5.4-mini` | Model to use for name generation                         |
+| `model`              | `openai-codex/gpt-5.6-luna` | Model to use for name generation                         |
 | `renameOnCompaction` | `on`                        | Whether to re-evaluate the session name after compaction |
 
-Any model available in Pi's registry can be used. Prefer fast, cheap models since the task is trivial: `openai-codex/gpt-5.4-mini`, `anthropic/claude-haiku-4-5`, and `google-gemini-cli/gemini-2.5-flash` are all good choices.
+Any model available in Pi's registry can be used. Prefer fast, cheap models since the task is trivial: `openai-codex/gpt-5.6-luna`, `anthropic/claude-haiku-4-5`, and `google-gemini-cli/gemini-2.5-flash` are all good choices.

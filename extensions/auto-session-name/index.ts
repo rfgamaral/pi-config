@@ -20,7 +20,7 @@ const CONFIG_KEY = 'autoSessionName'
 
 /** Default extension configuration. */
 const DEFAULT_CONFIG = {
-    model: 'openai-codex/gpt-5.4-mini',
+    model: 'openai-codex/gpt-5.6-luna',
     renameOnCompaction: 'on' as const,
 }
 
