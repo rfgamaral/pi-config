@@ -6,6 +6,7 @@
     "cockpitPanel": {
         "gitPollInterval": 5000,
         "prPollInterval": 30000,
+        "usagePollInterval": 300000,
         "workspaceProfiles": {
             "nameOverrides": {
                 "/.pi/agent": "Pi Coding Agent",

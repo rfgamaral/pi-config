@@ -44,7 +44,7 @@ The border color can be customized per project using the `colors` configuration.
 A single-line widget displayed below the editor, split into two sides:
 
 ```
-● PR #142 • ✓ 12/12 • ✎ 2       Opus 4.6 (xhigh) • ↑120.5k ↓45.2k • 650.0k/1.0M (65%)
+● PR #142 • ✓ 12/12 • ✎ 2       OpenAI Codex • GPT-5.4 (●) • 5h ━━━━━─── 62% • 7d ━━━───── 34%
 ```
 
 ### Left Side: PR Status
@@ -64,13 +64,23 @@ PR status is polled at a configurable interval (default: every 30 seconds). If n
 
 | Element             | Description                                            |
 | ------------------- | ------------------------------------------------------ |
-| `Opus 4.6 (xhigh)`  | Active model name and thinking level                   |
+| `OpenAI Codex`      | Active model provider                                  |
+| `GPT-5.4 (●)`       | Active model name and thinking level                   |
+| `5h ━━━━━─── 62%`   | Subscription quota used in the reported time window    |
 | `↑120.5k ↓45.2k`    | Input and output tokens for the session                |
 | `650.0k/1.0M (65%)` | Context window usage (tokens used / total, percentage) |
 
+### Provider Quotas
+
+Cockpit shows quota windows for the active provider when it uses an Anthropic or OpenAI Codex OAuth subscription. API-key authentication and unsupported providers do not show quota meters. When Anthropic reports a model-specific weekly limit, such as Fable's, it replaces the general weekly value for that active model.
+
+Each meter has eight cells. Usage above 0% fills at least one cell, while usage below 100% leaves at least one cell empty. Only filled `━` cells are colored: green below 70%, amber from 70% through 89%, and red at 90% or above. Labels, empty `─` cells, percentages, and separators remain dim.
+
+Quota data is fetched when the session starts, when the provider changes, and at the configured interval. The last successful value remains visible after a temporary failure, but expires when its reported reset time passes. Anthropic and OpenAI quota endpoints are private and may change without notice.
+
 ### Responsive Layout
 
-When the terminal is too narrow to fit everything, segments are progressively removed right-to-left. On the right side: context percentage goes first, then token counts, keeping the model name as the last visible element. On the left side: review threads go first, then CI checks, keeping the PR number as the last visible element.
+When the terminal is too narrow, Cockpit removes context and token totals first, followed by secondary PR details and the provider name. It then collapses quota tracks to percentages before hiding the weekly and short-term windows. At extreme widths, it removes the PR number before truncating the model, which remains the last visible right-side element.
 
 ## Style sharing
 
@@ -95,6 +105,7 @@ Edit `~/.pi/agent/extensions.json` (under the `cockpitPanel` key) to customize b
     "cockpitPanel": {
         "gitPollInterval": 5000,
         "prPollInterval": 30000,
+        "usagePollInterval": 300000,
         "workspaceProfiles": {
             "nameOverrides": {
                 "/.pi/agent": "Pi"
@@ -109,10 +120,11 @@ Edit `~/.pi/agent/extensions.json` (under the `cockpitPanel` key) to customize b
 
 ### Settings
 
-| Setting           | Default | Description                                                  |
-| ----------------- | ------- | ------------------------------------------------------------ |
-| `gitPollInterval` | `5000`  | How often to refresh git status (in milliseconds)            |
-| `prPollInterval`  | `30000` | How often to refresh PR status from GitHub (in milliseconds) |
+| Setting             | Default  | Description                                                  |
+| ------------------- | -------- | ------------------------------------------------------------ |
+| `gitPollInterval`   | `5000`   | How often to refresh git status (in milliseconds)            |
+| `prPollInterval`    | `30000`  | How often to refresh PR status from GitHub (in milliseconds) |
+| `usagePollInterval` | `300000` | How often to refresh provider quota usage (in milliseconds)  |
 
 ### Workspace Profiles
 

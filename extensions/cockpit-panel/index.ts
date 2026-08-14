@@ -8,6 +8,12 @@ import { visibleWidth, truncateToWidth } from '@earendil-works/pi-tui'
 import { readFileSync } from 'node:fs'
 import { readFile } from 'node:fs/promises'
 import { basename, join } from 'node:path'
+import {
+    fetchQuotaWindows,
+    quotaWindowsForModel,
+    supportsQuotaProvider,
+    type QuotaWindow,
+} from './quota-usage'
 
 // -----------------------------------------------------------------------------
 // Constants
@@ -23,6 +29,7 @@ const CONFIG_KEY = 'cockpitPanel'
 const DEFAULT_CONFIG = {
     gitPollInterval: 5_000,
     prPollInterval: 30_000,
+    usagePollInterval: 300_000,
     workspaceProfiles: {
         nameOverrides: {},
         colors: {},
@@ -79,6 +86,21 @@ type CockpitPanelConfig = {
     }
     gitPollInterval: number
     prPollInterval: number
+    usagePollInterval: number
+}
+
+/** Cached provider quota windows. */
+type CachedQuota = {
+    windows: QuotaWindow[]
+    fetchedAt: number
+}
+
+/** Rendered quota track components. */
+type QuotaTrack = {
+    filled: string
+    empty: string
+    percent: number
+    severity: 'success' | 'warning' | 'error'
 }
 
 /** CI check status counters. */
@@ -113,6 +135,11 @@ type GitInfo = {
 type CockpitPanelState = {
     gitPollTimer?: ReturnType<typeof setInterval>
     prPollTimer?: ReturnType<typeof setInterval>
+    usagePollTimer?: ReturnType<typeof setInterval>
+    quotaCache: Map<string, CachedQuota>
+    quotaRequests: Map<string, AbortController>
+    sessionGeneration: number
+    requestRender?: () => void
 }
 
 // -----------------------------------------------------------------------------
@@ -163,6 +190,10 @@ function loadConfig(): CockpitPanelConfig {
             typeof config.prPollInterval === 'number'
                 ? config.prPollInterval
                 : DEFAULT_CONFIG.prPollInterval,
+        usagePollInterval:
+            typeof config.usagePollInterval === 'number'
+                ? config.usagePollInterval
+                : DEFAULT_CONFIG.usagePollInterval,
     }
 }
 
@@ -510,6 +541,23 @@ function formatTokens(n: number): string {
     return `${(n / 1_000_000).toFixed(1)}M`
 }
 
+/** Build an eight-cell quota track with a severity derived from its usage. */
+export function buildQuotaTrack(usedPercent: number): QuotaTrack {
+    const clamped = Math.max(0, Math.min(100, Number.isFinite(usedPercent) ? usedPercent : 0))
+    const roundedCount = Math.round((clamped / 100) * 8)
+    const filledCount =
+        clamped === 0 ? 0 : clamped === 100 ? 8 : Math.max(1, Math.min(7, roundedCount))
+    const percent =
+        clamped === 0 ? 0 : clamped === 100 ? 100 : Math.max(1, Math.min(99, Math.round(clamped)))
+
+    return {
+        filled: '━'.repeat(filledCount),
+        empty: '─'.repeat(8 - filledCount),
+        percent,
+        severity: clamped >= 90 ? 'error' : clamped >= 70 ? 'warning' : 'success',
+    }
+}
+
 /**
  * Editor with a rounded box border (`╭╮│╰╯`), optional project name and git
  * info in the title bar, a prompt glyph (`❯`), and per-project border colors.
@@ -632,6 +680,81 @@ class BoxEditor extends CustomEditor {
 // Main functions
 // -----------------------------------------------------------------------------
 
+/** Fetch the active model provider's quota windows into the session cache. */
+async function refreshQuota(
+    ctx: ExtensionContext,
+    state: CockpitPanelState,
+    generation: number,
+): Promise<void> {
+    try {
+        if (generation !== state.sessionGeneration) {
+            return
+        }
+
+        const model = ctx.model
+
+        if (
+            !model ||
+            !supportsQuotaProvider(model.provider) ||
+            !ctx.modelRegistry.isUsingOAuth(model) ||
+            state.quotaRequests.has(model.provider)
+        ) {
+            return
+        }
+
+        const provider = model.provider
+        const controller = new AbortController()
+        const timeout = setTimeout(() => controller.abort(), 10_000)
+
+        state.quotaRequests.set(provider, controller)
+
+        try {
+            const auth = await ctx.modelRegistry.getProviderAuth(provider)
+            const accessToken = auth?.auth.apiKey
+
+            if (!accessToken) {
+                return
+            }
+
+            const windows = await fetchQuotaWindows(provider, accessToken, controller.signal)
+
+            if (generation === state.sessionGeneration) {
+                state.quotaCache.set(provider, { windows, fetchedAt: Date.now() })
+                state.requestRender?.()
+            }
+        } finally {
+            clearTimeout(timeout)
+
+            if (state.quotaRequests.get(provider) === controller) {
+                state.quotaRequests.delete(provider)
+            }
+        }
+    } catch {
+        // Private quota endpoints fail silently and retain the last successful value.
+    }
+}
+
+/** Return unexpired quota windows for the active OAuth model provider. */
+function activeQuotaWindows(ctx: ExtensionContext, state: CockpitPanelState): QuotaWindow[] {
+    const model = ctx.model
+
+    if (
+        !model ||
+        !supportsQuotaProvider(model.provider) ||
+        !ctx.modelRegistry.isUsingOAuth(model)
+    ) {
+        return []
+    }
+
+    const windows = state.quotaCache.get(model.provider)?.windows ?? []
+    const now = Date.now()
+    const unexpired = windows.filter(
+        (window) => window.resetsAt === undefined || window.resetsAt > now,
+    )
+
+    return quotaWindowsForModel(unexpired, `${model.id} ${model.name}`)
+}
+
 /** Clear the active polling timers, if any. */
 function clearPollingTimers(state: CockpitPanelState): void {
     if (state.gitPollTimer) {
@@ -643,6 +766,11 @@ function clearPollingTimers(state: CockpitPanelState): void {
         clearInterval(state.prPollTimer)
         state.prPollTimer = undefined
     }
+
+    if (state.usagePollTimer) {
+        clearInterval(state.usagePollTimer)
+        state.usagePollTimer = undefined
+    }
 }
 
 /** Set up the cockpit-panel UI for the current session. */
@@ -651,6 +779,11 @@ async function handleSessionStart(
     ctx: ExtensionContext,
     state: CockpitPanelState,
 ): Promise<void> {
+    clearPollingTimers(state)
+    const generation = ++state.sessionGeneration
+
+    state.requestRender = undefined
+
     ctx.ui.setFooter((_tui, _theme, _footerData) => ({
         render(_width: number): string[] {
             return []
@@ -721,33 +854,30 @@ async function handleSessionStart(
     }
 
     let prInfo: PrInfo | null = null
-    let tuiRef: { requestRender: () => void } | null = null
 
     fetchPrInfo(cwd).then((pr) => {
         prInfo = pr
-        tuiRef?.requestRender()
+        state.requestRender?.()
     })
-
-    clearPollingTimers(state)
 
     state.gitPollTimer = setInterval(async () => {
         const updatedGit = await detectGitInfo(cwd)
 
         if (editorRef) {
             editorRef.gitSuffix = buildGitSuffix(updatedGit)
-            tuiRef?.requestRender()
+            state.requestRender?.()
         }
     }, config.gitPollInterval)
 
     state.prPollTimer = setInterval(async () => {
         prInfo = await fetchPrInfo(cwd)
-        tuiRef?.requestRender()
+        state.requestRender?.()
     }, config.prPollInterval)
 
     ctx.ui.setWidget(
         'model-info',
-        (tui, _theme) => {
-            tuiRef = tui
+        (tui, theme) => {
+            state.requestRender = () => tui.requestRender()
 
             return {
                 render: (width: number) => {
@@ -781,24 +911,17 @@ async function handleSessionStart(
                         /^Claude\s+/i,
                         '',
                     )
-
                     const provider = providerName(ctx.model?.provider ?? '')
                     const thinking = pi.getThinkingLevel()
                     const thinkingIcon = THINKING_ICONS[thinking] ?? '?'
                     const thinkingColor = editorRef ? mute(editorRef.borderColor, 0.5) : dim
+                    const modelBlock =
+                        dim(`${modelName} (`) + thinkingColor(thinkingIcon) + dim(')')
+                    const quotaWindows = activeQuotaWindows(ctx, state)
                     const usage = ctx.getContextUsage()
 
-                    const rightSegments: string[] = []
-                    let hasProvider = false
-
-                    if (provider) {
-                        rightSegments.push(dim(`${provider} • `))
-                        hasProvider = true
-                    }
-
-                    rightSegments.push(
-                        dim(`${modelName} (`) + thinkingColor(thinkingIcon) + dim(')'),
-                    )
+                    let tokenBlock: string | undefined
+                    let contextBlock: string | undefined
 
                     if (usage?.tokens != null && usage?.contextWindow) {
                         let inputTokens = 0
@@ -813,56 +936,109 @@ async function handleSessionStart(
                             }
                         }
 
-                        rightSegments.push(
-                            dim(` • ↑${formatTokens(inputTokens)} ↓${formatTokens(outputTokens)}`),
+                        tokenBlock = dim(
+                            `↑${formatTokens(inputTokens)} ↓${formatTokens(outputTokens)}`,
                         )
 
                         const percent = Math.round((usage.tokens / usage.contextWindow) * 100)
 
-                        rightSegments.push(
-                            dim(
-                                ` • ${formatTokens(usage.tokens)}/${formatTokens(usage.contextWindow)} (${percent}%)`,
-                            ),
+                        contextBlock = dim(
+                            `${formatTokens(usage.tokens)}/${formatTokens(usage.contextWindow)} (${percent}%)`,
                         )
                     }
 
+                    let showProvider = !!provider
+                    let showTokenBlock = !!tokenBlock
+                    let showContextBlock = !!contextBlock
+                    let compactQuota = false
+                    const visibleQuotaWindows = [...quotaWindows]
+
+                    const formatQuota = (window: QuotaWindow): string => {
+                        const track = buildQuotaTrack(window.usedPercent)
+
+                        if (compactQuota) {
+                            return dim(`${window.label} ${track.percent}%`)
+                        }
+
+                        const filled = track.filled ? theme.fg(track.severity, track.filled) : ''
+
+                        return (
+                            dim(`${window.label} `) +
+                            filled +
+                            dim(`${track.empty} ${track.percent}%`)
+                        )
+                    }
+
+                    const renderRight = (): string => {
+                        const blocks: string[] = []
+
+                        if (showProvider) blocks.push(dim(provider))
+                        blocks.push(modelBlock)
+                        blocks.push(...visibleQuotaWindows.map(formatQuota))
+                        if (showTokenBlock && tokenBlock) blocks.push(tokenBlock)
+                        if (showContextBlock && contextBlock) blocks.push(contextBlock)
+
+                        return blocks.join(dim(' • ')) + dim(' ')
+                    }
+
                     let left = leftSegments.join('')
-                    let right = rightSegments.join('') + dim(' ')
+                    let right = renderRight()
                     let leftWidth = visibleWidth(left)
                     let rightWidth = visibleWidth(right)
 
-                    while (rightSegments.length > 1 && leftWidth + rightWidth + 1 > width) {
-                        if (hasProvider) {
-                            rightSegments.shift()
-                            hasProvider = false
+                    while (leftWidth + rightWidth + 1 > width) {
+                        if (showContextBlock) {
+                            showContextBlock = false
+                        } else if (showTokenBlock) {
+                            showTokenBlock = false
+                        } else if (leftSegments.length > 1) {
+                            leftSegments.pop()
+                        } else if (showProvider) {
+                            showProvider = false
+                        } else if (!compactQuota && visibleQuotaWindows.length > 0) {
+                            compactQuota = true
+                        } else if (visibleQuotaWindows.length > 0) {
+                            visibleQuotaWindows.pop()
+                        } else if (leftSegments.length > 0) {
+                            leftSegments.pop()
                         } else {
-                            rightSegments.pop()
+                            break
                         }
 
-                        right = rightSegments.length > 0 ? rightSegments.join('') + dim(' ') : ''
-                        rightWidth = visibleWidth(right)
-                    }
-
-                    while (leftSegments.length > 1 && leftWidth + rightWidth + 1 > width) {
-                        leftSegments.pop()
                         left = leftSegments.join('')
+                        right = renderRight()
                         leftWidth = visibleWidth(left)
+                        rightWidth = visibleWidth(right)
                     }
 
                     const gap = Math.max(1, width - leftWidth - rightWidth)
 
-                    return [left + ' '.repeat(gap) + right]
+                    return [truncateToWidth(left + ' '.repeat(gap) + right, width)]
                 },
                 invalidate() {},
             }
         },
         { placement: 'belowEditor' },
     )
+
+    void refreshQuota(ctx, state, generation)
+
+    state.usagePollTimer = setInterval(() => {
+        void refreshQuota(ctx, state, generation)
+    }, config.usagePollInterval)
 }
 
 /** Tear down any cockpit-panel session resources. */
 function handleSessionShutdown(state: CockpitPanelState): void {
+    state.sessionGeneration++
     clearPollingTimers(state)
+
+    for (const controller of state.quotaRequests.values()) {
+        controller.abort()
+    }
+
+    state.quotaRequests.clear()
+    state.requestRender = undefined
 }
 
 // -----------------------------------------------------------------------------
@@ -870,10 +1046,22 @@ function handleSessionShutdown(state: CockpitPanelState): void {
 // -----------------------------------------------------------------------------
 
 export default function (pi: ExtensionAPI) {
-    const state: CockpitPanelState = {}
+    const state: CockpitPanelState = {
+        quotaCache: new Map(),
+        quotaRequests: new Map(),
+        sessionGeneration: 0,
+    }
 
     pi.on('session_start', async (_event, ctx) => {
         await handleSessionStart(pi, ctx, state)
+    })
+
+    pi.on('model_select', (event, ctx) => {
+        state.requestRender?.()
+
+        if (event.model.provider !== event.previousModel?.provider) {
+            void refreshQuota(ctx, state, state.sessionGeneration)
+        }
     })
 
     pi.on('session_shutdown', () => {
