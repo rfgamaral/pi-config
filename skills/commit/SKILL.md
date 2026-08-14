@@ -77,7 +77,13 @@ When the user provides context with the commit request:
 
 - One logical change per commit.
 - Use present tense ("add" not "added") and imperative mood ("fix bug" not "fixes bug").
-- Only commit. NEVER push.
 - NEVER skip hooks (`--no-verify`) unless explicitly asked.
 - NEVER amend previous commits unless explicitly asked.
 - If a commit hook fails, fix the issue and create a new commit.
+
+### Push behavior
+
+- Never infer permission to push from a commit request. If the user asks only to commit, commit and stop.
+- Push only when explicitly requested, either in the same request or later. Use a normal push when possible.
+- If the user asks to force-push, or if this workflow intentionally amended, rebased, or reworded history, use `--force-with-lease` without asking again.
+- Never use plain `--force`; stop if the divergence is unexplained.
