@@ -42,6 +42,7 @@
     "npm:@tintinweb/pi-tasks",
     "npm:@tmustier/pi-usage-extension",
     "npm:pi-autoresearch",
+    "npm:pi-context",
     "npm:pi-github",
     "npm:pi-intercom",
     "npm:pi-mcp-adapter",
