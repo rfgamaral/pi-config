@@ -35,5 +35,11 @@
     "sessionDefaults": {
         "model": "openai-codex/gpt-5.6-sol",
         "thinking": "xhigh"
+    },
+    "sessionSnap": {
+        "deleteMaxDurationMinutes": 5,
+        "deleteMaxUserMessages": 3,
+        "archiveAfterDays": 180,
+        "keepFavorites": true
     }
 }
