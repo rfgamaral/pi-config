@@ -799,7 +799,10 @@ async function handleSessionStart(
     const git = await detectGitInfo(cwd)
     const config = loadConfig()
 
-    const displayName = matchKey(config.workspaceProfiles.nameOverrides, cwd) ?? detectedName
+    const displayName =
+        Object.entries(config.workspaceProfiles.nameOverrides).find(([key]) =>
+            cwd.includes(key),
+        )?.[1] ?? detectedName
     const hex = matchKey(config.workspaceProfiles.colors, detectedName)
 
     let editorRef: BoxEditor | null = null

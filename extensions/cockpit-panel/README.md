@@ -130,7 +130,7 @@ Edit `~/.pi/agent/extensions.json` (under the `cockpitPanel` key) to customize b
 
 #### `nameOverrides`
 
-Maps path substrings to custom display names. The match is case-insensitive against the full working directory path. If the key appears anywhere in the path, the corresponding value is used as the project name in the editor title bar.
+Maps path substrings to custom display names. The match is case-sensitive against the full working directory path. If the key appears anywhere in the path, the corresponding value is used as the project name in the editor title bar.
 
 For example, `"/.pi/agent": "Pi (Agent)"` will match any working directory containing `/.pi/agent` and display "Pi (Agent)" instead of the auto-detected name.
 

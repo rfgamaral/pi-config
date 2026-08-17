@@ -10,12 +10,12 @@
         "workspaceProfiles": {
             "nameOverrides": {
                 "/.pi/agent": "Pi Coding Agent",
-                "comms-backend": "[Backend] Comms",
-                "comms-web": "[Web] Comms",
-                "doist-os": "DoistOS",
-                "Todoist": "[Backend] Todoist",
-                "todoist-web": "[Web] Todoist",
-                "twist-web": "[Web] Twist"
+                "Comms/comms-backend": "[Backend] Comms",
+                "Comms/comms-web": "[Web] Comms",
+                "Others/doist-os": "DoistOS",
+                "Todoist/Todoist": "[Backend] Todoist",
+                "Todoist/todoist-web": "[Web] Todoist",
+                "Twist/twist-web": "[Web] Twist"
             },
             "colors": {
                 "comms": "#766bbd",
