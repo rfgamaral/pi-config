@@ -1194,7 +1194,25 @@ async function reviewCandidates(
             render: (width) => container.render(width),
             invalidate: () => container.invalidate(),
             handleInput: (data) => {
-                if (matchesKey(data, 'ctrl+enter')) {
+                if (
+                    matchesKey(data, 'ctrl+enter') ||
+                    // Windows Terminal sends Ctrl+Enter as the same LF byte as Ctrl+J.
+                    (Boolean(process.env.WT_SESSION) && matchesKey(data, 'ctrl+j'))
+                ) {
+                    const hasDestructiveActions = filteredRows.some((row) => {
+                        const action = actions.get(row.session.path)
+
+                        return action === 'delete' || action === 'archive'
+                    })
+
+                    if (!hasDestructiveActions) {
+                        ctx.ui.notify(
+                            'No destructive actions in the current tab and filter',
+                            'info',
+                        )
+                        return
+                    }
+
                     done({
                         actions: new Map(actions),
                         scope: new Set(filteredRows.map((row) => row.session.path)),
@@ -1371,7 +1389,6 @@ async function handleSnap(ctx: ExtensionCommandContext): Promise<void> {
         ]
 
         if (selected.length === 0) {
-            ctx.ui.notify('No destructive actions in the current tab and filter', 'info')
             continue
         }
 
