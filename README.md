@@ -61,7 +61,6 @@ In addition to the included packages, the setup relies on these community [Pi pa
 | Package                                                                                | Description                                                                             |
 | -------------------------------------------------------------------------------------- | --------------------------------------------------------------------------------------- |
 | [`pi-anthropic-auth`](https://pi.dev/packages/@gotgenes/pi-anthropic-auth)             | Anthropic OAuth compatibility for Pi                                                    |
-| [`pi-autoresearch`](https://pi.dev/packages/pi-autoresearch)                           | Autonomous experiment loop: try ideas, benchmark, keep wins, revert regressions         |
 | [`pi-context`](https://pi.dev/packages/pi-context)                                     | Agentic context management with checkpoints, timelines, and conversation compaction     |
 | [`pi-github`](https://pi.dev/packages/pi-github)                                       | GitHub toolkit for Pi with thread formatting, PR inspection, and repo search            |
 | [`pi-guardrails`](https://pi.dev/packages/@aliou/pi-guardrails)                        | Security hooks to reduce accidental destructive actions and secret access               |
