@@ -4,12 +4,12 @@ Session Snap helps clean up Pi's session history without adding a database or ch
 
 ## How It Works
 
-1. `/snap` scans Pi's session directory, excluding the current session.
-2. Sessions below both deletion limits are marked for deletion. Older sessions that do not meet both limits are marked for archiving. The rest are kept.
-3. The review shows each session's project, message count, and last activity. You can filter the results and change any proposed action before confirming.
-4. Session Snap applies the confirmed actions, removes successful results from the review, and leaves failures available to inspect or retry.
+1. `/snap` scans Pi's session directory and groups valid `parentSession` relationships into families. The family containing the current session is excluded. A session whose parent is missing or invalid becomes an independent orphan root.
+2. Only family roots appear in the review. Roots below both deletion limits are marked for deletion. Older roots that do not meet both limits are marked for archiving. The rest are kept.
+3. The review shows each root's project, message count, and last activity. You can filter the results and change any proposed action before confirming.
+4. Session Snap applies each confirmed root action to that root and all its descendants. The confirmation reports both family and session-file counts, then the review refreshes from disk so partial failures remain inspectable.
 
-Favorite protection integrates with the Session Favorites extension. When `keepFavorites` is enabled, sessions marked by that extension are kept. Unreadable, malformed, and unsupported files appear as skipped and are also kept by default. If favorite protection cannot be verified, the scan stops without changing anything.
+Favorite protection integrates with the Session Favorites extension. When `keepFavorites` is enabled, favorite roots are kept. Descendants follow their root's action and are not classified independently. Unreadable, malformed, and unsupported files appear as skipped and are also kept by default. If favorite protection cannot be verified, the scan stops without changing anything.
 
 Session Snap runs only when you call `/snap`. Deleted sessions are moved to your system trash when possible and permanently deleted otherwise. Archiving preserves the original session file without overwriting an existing archive.
 

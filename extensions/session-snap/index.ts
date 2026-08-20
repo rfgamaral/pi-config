@@ -77,6 +77,8 @@ type SessionAction = 'delete' | 'archive' | 'keep'
 /** Metrics collected from a standard Pi session file. */
 type SessionMetrics = {
     path: string
+    canonicalPath: string
+    parentSessionPath?: string
     projectDirectory: string
     id: string
     cwd: string
@@ -94,9 +96,19 @@ type SessionMetrics = {
 /** Session metrics collected before optional favorite-marker lookup. */
 type ParsedSessionMetrics = Omit<SessionMetrics, 'favorite'>
 
-/** Scanned session with its proposed cleanup action. */
+/** Root session with its proposed action and flattened descendants. */
 type ClassifiedSession = SessionMetrics & {
     action: SessionAction
+    descendants: SessionMetrics[]
+}
+
+/** One valid session node used to resolve root families. */
+type SessionFamilyNode = {
+    path: string
+    canonicalPath: string
+    parentSessionPath?: string
+    session?: ClassifiedSession
+    parent?: SessionFamilyNode
 }
 
 /** One session file omitted because it could not be classified safely. */
@@ -143,8 +155,11 @@ type ReviewRow =
     | { kind: 'session'; session: ClassifiedSession }
     | { kind: 'skipped'; session: SkippedSession }
 
-/** One valid or skipped session that can be passed to filesystem execution. */
-type CleanupTarget = ClassifiedSession | SkippedSession
+/** One root or skipped session selected from the review. */
+type ReviewTarget = ClassifiedSession | SkippedSession
+
+/** One valid or skipped session file passed to filesystem execution. */
+type CleanupTarget = SessionMetrics | SkippedSession
 
 /** One file operation that failed without stopping the remaining actions. */
 type ExecutionFailure = {
@@ -467,6 +482,7 @@ function isMarkerName(name: string): boolean {
 /** Read one standard Pi session file into cleanup metrics. */
 async function scanSession(
     filePath: string,
+    canonicalPath: string,
     projectDirectory: string,
     signal?: AbortSignal,
 ): Promise<ParsedSessionMetrics | null> {
@@ -560,8 +576,15 @@ async function scanSession(
         const createdAt = parseTimestamp(header.timestamp) ?? fileStats.mtimeMs
         const resolvedLastActivityAt = lastActivityAt ?? createdAt
 
+        const parentSessionPath =
+            typeof header.parentSession === 'string'
+                ? header.parentSession.trim() || undefined
+                : undefined
+
         return {
             path: filePath,
+            canonicalPath,
+            parentSessionPath,
             projectDirectory,
             id: header.id as string,
             cwd: typeof header.cwd === 'string' ? header.cwd : '',
@@ -627,10 +650,116 @@ function isPathInside(root: string, candidate: string): boolean {
     )
 }
 
+/** Group valid sessions under roots and exclude the current session's entire family. */
+function buildSessionFamilies(
+    sessions: ClassifiedSession[],
+    currentPath: string | undefined,
+    currentCanonicalPath: string | undefined,
+    currentParentSessionPath: string | undefined,
+    signal?: AbortSignal,
+): ClassifiedSession[] {
+    const nodes: SessionFamilyNode[] = sessions.map((session) => ({
+        path: session.path,
+        canonicalPath: session.canonicalPath,
+        parentSessionPath: session.parentSessionPath,
+        session,
+    }))
+    const currentNode: SessionFamilyNode | undefined =
+        currentPath && currentCanonicalPath
+            ? {
+                  path: currentPath,
+                  canonicalPath: currentCanonicalPath,
+                  parentSessionPath: currentParentSessionPath,
+              }
+            : undefined
+
+    if (currentNode) {
+        nodes.push(currentNode)
+    }
+
+    const nodesByPath = new Map<string, SessionFamilyNode>()
+
+    for (const node of nodes) {
+        nodesByPath.set(resolve(node.path), node)
+        nodesByPath.set(node.canonicalPath, node)
+    }
+
+    for (const node of nodes) {
+        signal?.throwIfAborted()
+
+        const parent =
+            node.parentSessionPath && isAbsolute(node.parentSessionPath)
+                ? nodesByPath.get(resolve(node.parentSessionPath))
+                : undefined
+
+        if (parent && parent !== node) {
+            node.parent = parent
+        }
+    }
+
+    const rootsByNode = new Map<SessionFamilyNode, SessionFamilyNode | undefined>()
+
+    for (const node of nodes) {
+        const seen = new Set<SessionFamilyNode>()
+        let root: SessionFamilyNode | undefined = node
+
+        while (root.parent) {
+            if (seen.has(root)) {
+                root = undefined
+                break
+            }
+
+            seen.add(root)
+            root = root.parent
+        }
+
+        rootsByNode.set(node, root)
+    }
+
+    const currentRoot = currentNode ? rootsByNode.get(currentNode) : undefined
+    const protectedNodes = new Set(
+        currentRoot
+            ? nodes.filter((node) => rootsByNode.get(node) === currentRoot)
+            : currentNode
+              ? [currentNode]
+              : [],
+    )
+    const membersByRoot = new Map<ClassifiedSession, SessionMetrics[]>()
+    const invalidRoots: ClassifiedSession[] = []
+
+    for (const node of nodes) {
+        if (!node.session || protectedNodes.has(node)) {
+            continue
+        }
+
+        const root = rootsByNode.get(node)
+
+        if (!root?.session) {
+            node.session.descendants = []
+            invalidRoots.push(node.session)
+            continue
+        }
+
+        const members = membersByRoot.get(root.session) ?? []
+
+        members.push(node.session)
+        membersByRoot.set(root.session, members)
+    }
+
+    return [
+        ...[...membersByRoot].map(([root, members]) => {
+            root.descendants = members.filter((session) => session.path !== root.path)
+            return root
+        }),
+        ...invalidRoots,
+    ]
+}
+
 /** Scan and classify direct JSONL children of Pi's standard project directories. */
 async function scanSessions(
     config: SessionSnapConfig,
     currentSessionFile: string | undefined,
+    currentParentSessionPath: string | undefined,
     signal?: AbortSignal,
 ): Promise<ScanResult> {
     const sessions: ClassifiedSession[] = []
@@ -740,7 +869,7 @@ async function scanSessions(
             let parsed: ParsedSessionMetrics | null
 
             try {
-                parsed = await scanSession(filePath, projectDirectory, signal)
+                parsed = await scanSession(filePath, canonicalPath, projectDirectory, signal)
             } catch (error) {
                 if (signal?.aborted) {
                     throw error
@@ -768,19 +897,30 @@ async function scanSessions(
                 : false
             const metrics: SessionMetrics = { ...parsed, favorite }
 
-            sessions.push({ ...metrics, action: classifySession(metrics, config) })
+            sessions.push({
+                ...metrics,
+                action: classifySession(metrics, config),
+                descendants: [],
+            })
         }
     }
 
+    const roots = buildSessionFamilies(
+        sessions,
+        currentPath,
+        currentCanonicalPath,
+        currentParentSessionPath,
+        signal,
+    )
     const actionOrder: Record<SessionAction, number> = { delete: 0, archive: 1, keep: 2 }
 
-    sessions.sort(
+    roots.sort(
         (left, right) =>
             actionOrder[left.action] - actionOrder[right.action] ||
             left.lastActivityAt - right.lastActivityAt,
     )
 
-    return { sessions, skipped }
+    return { sessions: roots, skipped }
 }
 
 /** Format a byte count for compact display. */
@@ -828,7 +968,7 @@ function sessionTitle(session: ClassifiedSession): string {
 }
 
 /** Move one session into its matching filesystem-only archive directory. */
-async function archiveSession(session: ClassifiedSession): Promise<void> {
+async function archiveSession(session: SessionMetrics): Promise<void> {
     const { projectDirectory } = session
 
     if (
@@ -1251,22 +1391,29 @@ async function reviewCandidates(
     })
 }
 
+/** Expand one reviewed root into the session files affected by its action. */
+function expandCleanupTarget(session: ReviewTarget): CleanupTarget[] {
+    return 'descendants' in session ? [session, ...session.descendants] : [session]
+}
+
 /** Execute reviewed deletes first and archives second, isolating file failures. */
 async function executeActions(
-    sessions: CleanupTarget[],
+    sessions: ReviewTarget[],
     actions: Map<string, SessionAction>,
     ctx: ExtensionCommandContext,
 ): Promise<ExecutionResult> {
-    const selected = [
-        ...sessions.filter((session) => actions.get(session.path) === 'delete'),
-        ...sessions.filter((session) => actions.get(session.path) === 'archive'),
-    ]
+    const planned = (action: Exclude<SessionAction, 'keep'>) =>
+        sessions
+            .filter((session) => actions.get(session.path) === action)
+            .flatMap((session) =>
+                expandCleanupTarget(session).map((target) => ({ action, session: target })),
+            )
+    const selected = [...planned('delete'), ...planned('archive')]
     const result: ExecutionResult = { deleted: [], archived: [], failures: [] }
 
     try {
         for (let index = 0; index < selected.length; index += 1) {
-            const session = selected[index]
-            const action = actions.get(session.path)
+            const { action, session } = selected[index]
 
             ctx.ui.setStatus(
                 'session-snap',
@@ -1306,13 +1453,14 @@ async function handleSnap(ctx: ExtensionCommandContext): Promise<void> {
 
     const config = loadConfig()
     const currentSessionFile = ctx.sessionManager.getSessionFile()
+    const currentParentSessionPath = ctx.sessionManager.getHeader()?.parentSession
     const scanResult = await ctx.ui.custom<ScanResult | { error: string } | null>(
         (tui, theme, _keybindings, done) => {
             const loader = new BorderedLoader(tui, theme, 'Scanning Pi sessions...')
 
             loader.onAbort = () => done(null)
 
-            scanSessions(config, currentSessionFile, loader.signal)
+            scanSessions(config, currentSessionFile, currentParentSessionPath, loader.signal)
                 .then((result) => {
                     if (!loader.signal.aborted) {
                         done(result)
@@ -1374,7 +1522,7 @@ async function handleSnap(ctx: ExtensionCommandContext): Promise<void> {
             selectedPath: review.selectedPath,
         }
 
-        const selected: CleanupTarget[] = [
+        const selected: ReviewTarget[] = [
             ...scanResult.sessions.filter((session) => {
                 const action = review.actions.get(session.path)
 
@@ -1392,30 +1540,39 @@ async function handleSnap(ctx: ExtensionCommandContext): Promise<void> {
             continue
         }
 
-        const deleting = selected.filter((session) => review.actions.get(session.path) === 'delete')
-        const archiving = selected.filter(
+        const deletingFamilies = selected.filter(
             (session): session is ClassifiedSession =>
-                'fileSizeBytes' in session && review.actions.get(session.path) === 'archive',
+                'descendants' in session && review.actions.get(session.path) === 'delete',
         )
+        const deletingSkipped = selected.filter(
+            (session) =>
+                !('descendants' in session) && review.actions.get(session.path) === 'delete',
+        )
+        const archivingFamilies = selected.filter(
+            (session): session is ClassifiedSession =>
+                'descendants' in session && review.actions.get(session.path) === 'archive',
+        )
+        const deleting = [...deletingFamilies, ...deletingSkipped].flatMap(expandCleanupTarget)
+        const archiving = archivingFamilies.flatMap((session) => [session, ...session.descendants])
         const deletingSize = deleting.every((session) => 'fileSizeBytes' in session)
-            ? ` (${formatBytes(
+            ? `, ${formatBytes(
                   deleting.reduce(
                       (total, session) =>
                           total + ('fileSizeBytes' in session ? session.fileSizeBytes : 0),
                       0,
                   ),
-              )})`
+              )}`
             : ''
         const tabName = review.tab.charAt(0).toUpperCase() + review.tab.slice(1)
         const filter = cleanDisplayText(review.filter)
         const scope =
-            `Scope: ${tabName} tab • ${review.scope.size} visible session${
+            `Scope: ${tabName} tab • ${review.scope.size} visible row${
                 review.scope.size === 1 ? '' : 's'
             }` + (filter ? ` • filter: ${truncateToWidth(filter, 60, '…')}` : '')
         const confirmation = [
             scope,
-            `Delete ${deleting.length} sessions${deletingSize}`,
-            `Archive ${archiving.length} sessions (${formatBytes(
+            `Delete ${deletingFamilies.length} families, ${deletingSkipped.length} skipped files (${deleting.length} session files${deletingSize})`,
+            `Archive ${archivingFamilies.length} families (${archiving.length} session files, ${formatBytes(
                 archiving.reduce((total, session) => total + session.fileSizeBytes, 0),
             )})`,
         ]
@@ -1426,15 +1583,6 @@ async function handleSnap(ctx: ExtensionCommandContext): Promise<void> {
         }
 
         const execution = await executeActions(selected, review.actions, ctx)
-        const completed = new Set([...execution.deleted, ...execution.archived])
-
-        scanResult.sessions = scanResult.sessions.filter((session) => !completed.has(session.path))
-        scanResult.skipped = scanResult.skipped.filter((session) => !completed.has(session.path))
-
-        for (const path of completed) {
-            actions.delete(path)
-        }
-
         const summary =
             `Deleted ${execution.deleted.length} sessions, ` +
             `archived ${execution.archived.length} sessions`
@@ -1457,6 +1605,40 @@ async function handleSnap(ctx: ExtensionCommandContext): Promise<void> {
             }
 
             ctx.ui.notify(failures.join('\n'), 'warning')
+        }
+
+        const previousActions = new Map(actions)
+
+        try {
+            ctx.ui.setStatus('session-snap', 'Refreshing session families...')
+
+            const refreshed = await scanSessions(
+                config,
+                currentSessionFile,
+                currentParentSessionPath,
+            )
+
+            scanResult.sessions = refreshed.sessions
+            scanResult.skipped = refreshed.skipped
+            actions.clear()
+
+            for (const session of scanResult.sessions) {
+                actions.set(session.path, previousActions.get(session.path) ?? session.action)
+            }
+
+            for (const session of scanResult.skipped) {
+                actions.set(session.path, previousActions.get(session.path) ?? 'keep')
+            }
+        } catch (error) {
+            ctx.ui.notify(
+                `Could not refresh sessions after cleanup: ${cleanDisplayText(
+                    error instanceof Error ? error.message : String(error),
+                )}`,
+                'error',
+            )
+            return
+        } finally {
+            ctx.ui.setStatus('session-snap', undefined)
         }
     }
 }
