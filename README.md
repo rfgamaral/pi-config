@@ -51,6 +51,7 @@ The repo includes its own set of extensions, skills, and prompts, also exported 
 
 |     | Prompt                                                    | Description                                                                                           |
 | --- | --------------------------------------------------------- | ----------------------------------------------------------------------------------------------------- |
+| ●   | [`draft-pull-request`](prompts/draft-pull-request.md)     | Draft a pull request iteratively and create it only after explicit approval                           |
 | ●   | [`explain-pull-request`](prompts/explain-pull-request.md) | Explain a GitHub PR in plain language with Mermaid diagrams as a themed HTML report                   |
 | ●   | [`rebase-on-main`](prompts/rebase-on-main.md)             | Rebase current branch onto main with automatic stashing, conflict resolution, and optional force-push |
 
