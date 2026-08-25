@@ -31,7 +31,6 @@ The repo includes its own set of extensions, skills, and prompts, also exported 
 |     | Extension                                           | Description                                                                                                                |
 | --- | --------------------------------------------------- | -------------------------------------------------------------------------------------------------------------------------- |
 | ●   | [`auto-session-name`](extensions/auto-session-name) | LLM-generated session titles after the first exchange, with automatic re-evaluation on compaction                          |
-| ⑂   | [`clipboard-image`](extensions/clipboard-image)     | Clipboard image paste for WSL with format conversion, resize, and in-memory attachment via `Alt+V`                         |
 | ●   | [`cockpit-panel`](extensions/cockpit-panel)         | Custom editor with rounded-box border, per-project colors, git status, GitHub PR checks, and model/context usage widget    |
 | ⑂   | [`handoff`](extensions/handoff)                     | Goal-directed context handoff to an editable fresh-session prompt, with parent-session recall                              |
 | ⑂   | [`oracle`](extensions/oracle)                       | Second opinion from an alternate model with ranked auto-selection, automatic thinking caps, and optional context injection |
