@@ -22,6 +22,7 @@ models-store.json
 extensions/context7/cache/
 mcp-cache.json
 mcp-npx-cache.json
+usage-extension-cache.json
 
 # Project dependencies
 .worktrees/
