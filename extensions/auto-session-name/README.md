@@ -22,7 +22,7 @@ Use `/rename-session-name` to re-evaluate the session name at any time. The curr
 
 ## Configuration
 
-Edit `~/.pi/agent/extensions.json` (under the `autoSessionName` key):
+Edit `~/.pi/agent/extensions/config.json` (under the `autoSessionName` key):
 
 ```json
 {

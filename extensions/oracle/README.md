@@ -34,7 +34,7 @@ Optional flags can be combined in any order, as long as the prompt comes last. F
 
 ## Configuration
 
-Edit `~/.pi/agent/extensions.json` (under the `oracle` key):
+Edit `~/.pi/agent/extensions/config.json` (under the `oracle` key):
 
 ```json
 {

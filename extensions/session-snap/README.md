@@ -32,7 +32,7 @@ There is no `/archive` command. To restore a session, move its JSONL file from `
 
 ## Configuration
 
-Add or edit the `sessionSnap` section in `~/.pi/agent/extensions.json`:
+Add or edit the `sessionSnap` section in `~/.pi/agent/extensions/config.json`:
 
 ```json
 {

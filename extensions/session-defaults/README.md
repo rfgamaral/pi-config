@@ -16,7 +16,7 @@ Sessions opened with `/resume`, sessions created with `/fork`, and ephemeral ses
 
 ## Configuration
 
-Edit `~/.pi/agent/extensions.json` (under the `sessionDefaults` key):
+Edit `~/.pi/agent/extensions/config.json` (under the `sessionDefaults` key):
 
 ```json
 {

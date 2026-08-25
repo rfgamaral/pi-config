@@ -36,7 +36,7 @@ The tool can only read sessions listed in the handoff. It cannot recover informa
 
 ## Configuration
 
-Edit `~/.pi/agent/extensions.json` (under the `handoff` key):
+Edit `~/.pi/agent/extensions/config.json` (under the `handoff` key):
 
 ```json
 {

@@ -98,7 +98,7 @@ The event is only emitted when a custom project color is active. Extensions shou
 
 ## Configuration
 
-Edit `~/.pi/agent/extensions.json` (under the `cockpitPanel` key) to customize behavior.
+Edit `~/.pi/agent/extensions/config.json` (under the `cockpitPanel` key) to customize behavior.
 
 ```json
 {

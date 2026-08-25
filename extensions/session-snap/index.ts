@@ -28,7 +28,7 @@ import { stripVTControlCharacters } from 'node:util'
 // -----------------------------------------------------------------------------
 
 /** Path to the shared config file for this repo's custom extensions. */
-const CONFIG_PATH = join(getAgentDir(), 'extensions.json')
+const CONFIG_PATH = join(getAgentDir(), 'extensions', 'config.json')
 
 /** Key for this extension's section in the shared config file. */
 const CONFIG_KEY = 'sessionSnap'
