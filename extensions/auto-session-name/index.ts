@@ -21,8 +21,12 @@ const CONFIG_KEY = 'autoSessionName'
 /** Default extension configuration. */
 const DEFAULT_CONFIG = {
     model: 'openai-codex/gpt-5.6-luna',
+    thinking: 'low' as const,
     renameOnCompaction: 'on' as const,
 }
+
+/** Supported thinking levels for session name generation. */
+const THINKING_LEVELS = ['off', 'minimal', 'low', 'medium', 'high', 'xhigh', 'max'] as const
 
 /** Shared formatting rules appended to all naming prompts. */
 const FORMAT_RULES =
@@ -74,9 +78,13 @@ const ENTRY_TYPE = 'auto-session-name'
 // Types
 // -----------------------------------------------------------------------------
 
+/** Thinking level used by the configured naming model. */
+type ThinkingLevel = (typeof THINKING_LEVELS)[number]
+
 /** Extension configuration loaded from disk. */
 type AutoSessionNameConfig = {
     model: string
+    thinking: ThinkingLevel
     renameOnCompaction: 'on' | 'off'
 }
 
@@ -117,9 +125,12 @@ function loadConfig(): AutoSessionNameConfig {
     const config = readConfigFile()
 
     return {
-        ...DEFAULT_CONFIG,
         model:
             typeof config.model === 'string' && config.model ? config.model : DEFAULT_CONFIG.model,
+        thinking:
+            config.thinking !== undefined && THINKING_LEVELS.includes(config.thinking)
+                ? config.thinking
+                : DEFAULT_CONFIG.thinking,
         renameOnCompaction:
             config.renameOnCompaction === 'off' ? 'off' : DEFAULT_CONFIG.renameOnCompaction,
     }
@@ -333,10 +344,11 @@ async function summarizeDigestChunk(
     index: number,
     total: number,
     maxSummaryLength: number,
+    thinking: ThinkingLevel,
     signal?: AbortSignal,
 ): Promise<string | null> {
     const response = await resolved.provider
-        .stream(
+        .streamSimple(
             resolved.model,
             {
                 systemPrompt: NAMING_DIGEST_PROMPT,
@@ -359,6 +371,7 @@ async function summarizeDigestChunk(
                 apiKey: resolved.apiKey,
                 headers: resolved.headers,
                 maxTokens: 800,
+                reasoning: resolved.model.reasoning && thinking !== 'off' ? thinking : undefined,
                 signal,
             },
         )
@@ -370,7 +383,11 @@ async function summarizeDigestChunk(
 }
 
 /** Build the context sent to the final naming request. */
-async function buildNamingContext(ctx: ExtensionContext, resolved: ResolvedModel): Promise<string> {
+async function buildNamingContext(
+    ctx: ExtensionContext,
+    resolved: ResolvedModel,
+    thinking: ThinkingLevel,
+): Promise<string> {
     const digest = serializeBranchForNaming(ctx)
 
     if (!digest || digest.length <= MAX_CONTEXT_LENGTH) {
@@ -391,6 +408,7 @@ async function buildNamingContext(ctx: ExtensionContext, resolved: ResolvedModel
             index,
             chunks.length,
             maxSummaryLength,
+            thinking,
             ctx.signal,
         )
 
@@ -426,9 +444,10 @@ function isManuallyNamed(pi: ExtensionAPI, state: AutoSessionNameState): boolean
 async function generateName(
     ctx: ExtensionContext,
     resolved: ResolvedModel,
+    thinking: ThinkingLevel,
     currentName?: string,
 ): Promise<string | null> {
-    const conversation = await buildNamingContext(ctx, resolved)
+    const conversation = await buildNamingContext(ctx, resolved, thinking)
 
     if (!conversation) {
         return null
@@ -441,7 +460,7 @@ async function generateName(
     }
 
     const response = await resolved.provider
-        .stream(
+        .streamSimple(
             resolved.model,
             {
                 systemPrompt: currentName ? RENAME_PROMPT : NAMING_PROMPT,
@@ -456,6 +475,7 @@ async function generateName(
             {
                 apiKey: resolved.apiKey,
                 headers: resolved.headers,
+                reasoning: resolved.model.reasoning && thinking !== 'off' ? thinking : undefined,
                 signal: ctx.signal,
             },
         )
@@ -509,7 +529,7 @@ async function handleAgentEnd(
         return
     }
 
-    const name = await generateName(ctx, resolved)
+    const name = await generateName(ctx, resolved, config.thinking)
 
     if (name) {
         pi.setSessionName(name)
@@ -542,7 +562,7 @@ async function handleRenameSessionName(
     }
 
     const currentName = force ? undefined : (pi.getSessionName() ?? undefined)
-    const name = await generateName(ctx, resolved, currentName)
+    const name = await generateName(ctx, resolved, config.thinking, currentName)
 
     if (name) {
         const kept = currentName && name === currentName
@@ -574,7 +594,7 @@ async function handleSessionCompact(
     }
 
     const currentName = pi.getSessionName()
-    const name = await generateName(ctx, resolved, currentName ?? undefined)
+    const name = await generateName(ctx, resolved, config.thinking, currentName ?? undefined)
 
     if (name) {
         pi.setSessionName(name)
