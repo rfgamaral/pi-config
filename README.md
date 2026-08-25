@@ -64,7 +64,6 @@ In addition to the included packages, the setup relies on these community [Pi pa
 | [`pi-context`](https://pi.dev/packages/pi-context)                                     | Agentic context management with checkpoints, timelines, and conversation compaction     |
 | [`pi-github`](https://pi.dev/packages/pi-github)                                       | GitHub toolkit for Pi with thread formatting, PR inspection, and repo search            |
 | [`pi-guardrails`](https://pi.dev/packages/@aliou/pi-guardrails)                        | Security hooks to reduce accidental destructive actions and secret access               |
-| [`pi-intercom`](https://pi.dev/packages/pi-intercom)                                   | Coordination channel for subagents to talk back to the parent session for decisions     |
 | [`pi-mcp-adapter`](https://pi.dev/packages/pi-mcp-adapter)                             | Adapter to run MCP (Model Context Protocol) servers as Pi extensions                    |
 | [`pi-subagents`](https://pi.dev/packages/@tintinweb/pi-subagents)                      | Claude Code-style subagents with parallel runs, live widget, mid-run steering, and more |
 | [`pi-tasks`](https://pi.dev/packages/@tintinweb/pi-tasks)                              | Claude Code-style task tracking with dependencies and a persistent widget               |

@@ -43,7 +43,6 @@
     "npm:@tmustier/pi-usage-extension",
     "npm:pi-context",
     "npm:pi-github",
-    "npm:pi-intercom",
     "npm:pi-mcp-adapter",
     "npm:pi-memory",
     "npm:pi-tool-display",
