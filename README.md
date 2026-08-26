@@ -1,23 +1,23 @@
 # @rfgamaral/pi-config
 
-Personal harness configuration for the [Pi](https://github.com/badlogic/pi-mono) coding agent: extensions, skills, and prompts.
+Personal harness configuration for the [Pi](https://github.com/earendil-works/pi) coding agent: extensions, skills, and prompts.
 
 ## Using as a Pi Package
 
 > [!NOTE]
 > This is a personal configuration repo. Some skills and settings are tailored to my setup and may need adjustments for yours.
 
-This only exports the custom extensions, skills, and prompts listed below. Third-party packages need to be installed separately.
+This only exports the custom extensions, skills, and prompts listed below. Third-party packages need to be installed separately. Package installation does not apply repository-level configuration files, such as `settings.json` or `keybindings.json`.
 
 ```bash
-pi install git:github.com/rfgamaral/pi-agent-config
+pi install git:github.com/rfgamaral/pi-config
 ```
 
-Then run `pi config` to enable or disable individual extensions, skills, and prompts. Alternatively, use [package filtering](https://github.com/badlogic/pi-mono/blob/main/packages/coding-agent/docs/packages.md#package-filtering) in `settings.json`.
+Then run `pi config` to enable or disable individual extensions, skills, and prompts. Alternatively, use [package filtering](https://github.com/earendil-works/pi/blob/main/packages/coding-agent/docs/packages.md#package-filtering) in `settings.json`.
 
 ## AGENTS.md
 
-Global agent instructions loaded into every Pi session as a system prompt extension. Contains communication preferences and development rules, not project contribution guidelines. Only applies when this repo is cloned directly as `~/.pi/agent/`.
+Global agent instructions loaded into every Pi session as a system prompt extension. Contains communication preferences and development rules, not project contribution guidelines. Pi loads it globally when this repo is the agent directory (`~/.pi/agent/` by default, configurable with `PI_CODING_AGENT_DIR`) and project-locally when this repo is the current directory or an ancestor.
 
 ## Included Packages
 
@@ -45,6 +45,7 @@ The repo includes its own set of extensions, skills, and prompts, also exported 
 | --- | ----------------------------------------- | -------------------------------------------------------------------------------------------------------------- |
 | ●   | [`commit`](skills/commit)                 | Git commits with convention detection, intelligent staging, multi-commit splitting, and diff review guardrails |
 | ●   | [`obsidian-vault`](skills/obsidian-vault) | Read, search, create, and edit Obsidian vault notes with filesystem guardrails and backlink-aware operations   |
+| ⑂   | [`orwell-writing`](skills/orwell-writing) | Draft and revise prose using Orwell's rules and Simplified Technical English                                   |
 
 ### Prompts
 
@@ -56,21 +57,25 @@ The repo includes its own set of extensions, skills, and prompts, also exported 
 
 ## Community Packages
 
-In addition to the included packages, the setup relies on these community [Pi packages](https://github.com/badlogic/pi-mono/blob/main/packages/coding-agent/docs/packages.md) which are installed separately.
+In addition to the included packages, the setup relies on these community [Pi packages](https://github.com/earendil-works/pi/blob/main/packages/coding-agent/docs/packages.md) which are installed separately.
 
 | Package                                                                                | Description                                                                             |
 | -------------------------------------------------------------------------------------- | --------------------------------------------------------------------------------------- |
 | [`pi-anthropic-auth`](https://pi.dev/packages/@gotgenes/pi-anthropic-auth)             | Anthropic OAuth compatibility for Pi                                                    |
 | [`pi-context`](https://pi.dev/packages/pi-context)                                     | Agentic context management with checkpoints, timelines, and conversation compaction     |
 | [`pi-github`](https://pi.dev/packages/pi-github)                                       | GitHub toolkit for Pi with thread formatting, PR inspection, and repo search            |
+| [`pi-gpt-config`](https://github.com/edxeth/pi-gpt-config)                             | Codex-parity settings panel for supported OpenAI models                                 |
 | [`pi-guardrails`](https://pi.dev/packages/@aliou/pi-guardrails)                        | Security hooks to reduce accidental destructive actions and secret access               |
 | [`pi-mcp-adapter`](https://pi.dev/packages/pi-mcp-adapter)                             | Adapter to run MCP (Model Context Protocol) servers as Pi extensions                    |
+| [`pi-memory`](https://pi.dev/packages/pi-memory)                                       | Durable memory, daily logs, scratchpad, and qmd-powered search                          |
 | [`pi-subagents`](https://pi.dev/packages/@tintinweb/pi-subagents)                      | Claude Code-style subagents with parallel runs, live widget, mid-run steering, and more |
 | [`pi-tasks`](https://pi.dev/packages/@tintinweb/pi-tasks)                              | Claude Code-style task tracking with dependencies and a persistent widget               |
 | [`pi-tool-display`](https://pi.dev/packages/pi-tool-display)                           | OpenCode-style tool rendering for Pi with compact output and richer diffs               |
 | [`pi-usage-extension`](https://pi.dev/packages/@tmustier/pi-usage-extension)           | Dashboard with aggregated usage statistics across all sessions                          |
 | [`pi-web-access`](https://pi.dev/packages/pi-web-access)                               | Web search, URL fetch, GitHub repo cloning, and PDF/YouTube/video extraction            |
+| [`ponytail`](https://github.com/DietrichGebert/ponytail)                               | Minimal coding and review workflows focused on YAGNI and reducing over-engineering      |
 | [`rpiv-ask-user-question`](https://pi.dev/packages/@juicesharp/rpiv-ask-user-question) | Structured clarifying questions with a tabbed dialog and side-by-side previews          |
+| [`superpowers`](https://github.com/obra/superpowers)                                   | Development workflow skills for planning, debugging, testing, and review                |
 
 ## License
 
