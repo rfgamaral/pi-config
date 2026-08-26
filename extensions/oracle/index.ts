@@ -39,7 +39,7 @@ const DEFAULT_CONFIG = {
 }
 
 /** Valid thinking levels for the oracle query. */
-const THINKING_LEVELS = ['off', 'minimal', 'low', 'medium', 'high', 'xhigh'] as const
+const THINKING_LEVELS = ['off', 'minimal', 'low', 'medium', 'high', 'xhigh', 'max'] as const
 
 /** Errors that indicate the provider rejected the requested thinking level. */
 const THINKING_LEVEL_ERROR_PATTERNS = [
@@ -160,7 +160,11 @@ function getAutoThinkingLevel(model: Pick<Model<Api>, 'api' | 'reasoning'>): Thi
 
     const supportedThinkingLevels = getSupportedThinkingLevels(model as Model<Api>)
 
-    return supportedThinkingLevels.includes('xhigh') ? 'xhigh' : 'high'
+    return supportedThinkingLevels.includes('max')
+        ? 'max'
+        : supportedThinkingLevels.includes('xhigh')
+          ? 'xhigh'
+          : 'high'
 }
 
 function clampThinkingLevel(level: ThinkingLevel, cap: ThinkingLevel): ThinkingLevel {
@@ -833,12 +837,12 @@ function registerOracleExtension(pi: ExtensionAPI): void {
 
     pi.registerMessageRenderer('oracle-response', (message, options, theme) => {
         const { expanded } = options
-        const details = (message.details || {}) as Record<string, any>
+        const details = (message.details || {}) as { modelName?: string; files?: string[] }
 
         let text = theme.fg('accent', `🔮 Oracle • ${details.modelName || 'unknown'}:\n\n`)
         text += message.content
 
-        if (expanded && details.files?.length > 0) {
+        if (expanded && details.files?.length) {
             text += '\n\n' + theme.fg('dim', `Files: ${details.files.join(', ')}`)
         }
 

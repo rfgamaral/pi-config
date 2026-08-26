@@ -26,11 +26,11 @@ With a thinking override:
 
 Optional flags can be combined in any order, as long as the prompt comes last. Flags placed after the prompt are treated as part of the prompt text.
 
-| Flag               | Description                                                                   |
-| ------------------ | ----------------------------------------------------------------------------- |
-| `-m`, `--model`    | Override model selection (fuzzy matches against model ID or `provider/model`) |
-| `-t`, `--thinking` | Override thinking level (`off`, `minimal`, `low`, `medium`, `high`, `xhigh`)  |
-| `-f`, `--file`     | Include a file's contents as additional context (can be repeated)             |
+| Flag               | Description                                                                         |
+| ------------------ | ----------------------------------------------------------------------------------- |
+| `-m`, `--model`    | Override model selection (fuzzy matches against model ID or `provider/model`)       |
+| `-t`, `--thinking` | Override thinking level (`off`, `minimal`, `low`, `medium`, `high`, `xhigh`, `max`) |
+| `-f`, `--file`     | Include a file's contents as additional context (can be repeated)                   |
 
 ## Configuration
 
@@ -45,10 +45,10 @@ Edit `~/.pi/agent/extensions/config.json` (under the `oracle` key):
 }
 ```
 
-| Setting       | Default                                                   | Description                                                                                  |
-| ------------- | --------------------------------------------------------- | -------------------------------------------------------------------------------------------- |
-| `models`      | `["anthropic/claude-opus-5", "openai-codex/gpt-5.6-sol"]` | Ranked list of models to consult. The first available non-current model is used.             |
-| `maxThinking` | `auto`                                                    | Starting thinking level, or `auto` for Oracle's highest guess. Falls back lower if rejected. |
+| Setting       | Default                                                   | Description                                                                                                   |
+| ------------- | --------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------- |
+| `models`      | `["anthropic/claude-opus-5", "openai-codex/gpt-5.6-sol"]` | Ranked list of models to consult. The first available non-current model is used.                              |
+| `maxThinking` | `auto`                                                    | Starting thinking level, or `auto` for Oracle's highest guess, including `max`. Falls back lower if rejected. |
 
 Oracle picks the first entry that exists in Pi's model registry, has a valid API key, and is not the model currently in use. Models are compared by ID, so the same model from a different provider (e.g., Copilot Opus vs Anthropic Opus) is still skipped.
 
