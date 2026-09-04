@@ -620,7 +620,7 @@ class BoxEditor extends CustomEditor {
 
         for (let i = 0; i < lines.length; i++) {
             if (i === 0) {
-                result.push(this.renderTopBorder(bc, textLight, dividerLight, borderW))
+                result.push(this.renderCockpitTopBorder(bc, textLight, dividerLight, borderW))
             } else if (i === bottomIdx && !hasAutocomplete) {
                 result.push(bc('╰──') + lines[i] + bc('──╯'))
             } else if (i === bottomIdx && hasAutocomplete) {
@@ -642,7 +642,7 @@ class BoxEditor extends CustomEditor {
      * Render the top border with project name and git info. Drops git info
      * first if the terminal is too narrow, then falls back to a plain border.
      */
-    private renderTopBorder(
+    private renderCockpitTopBorder(
         bc: (s: string) => string,
         textLight: (s: string) => string,
         dividerLight: (s: string) => string,
