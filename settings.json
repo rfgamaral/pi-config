@@ -34,7 +34,10 @@
   "packages": [
     "git:github.com/DietrichGebert/ponytail",
     "git:github.com/edxeth/pi-gpt-config",
-    "git:github.com/obra/superpowers",
+    {
+      "source": "git:github.com/obra/superpowers",
+      "autoload": false
+    },
     "npm:@aliou/pi-guardrails",
     "npm:@gotgenes/pi-anthropic-auth",
     "npm:@juicesharp/rpiv-ask-user-question",
