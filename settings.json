@@ -1,5 +1,5 @@
 {
-  "lastChangelogVersion": "0.84.3",
+  "lastChangelogVersion": "0.85.0",
   "collapseChangelog": true,
   "compaction": {
     "enabled": true
@@ -28,7 +28,7 @@
   "npmCommand": [
     "fnm",
     "exec",
-    "--using=v24.14.1",
+    "--using=v24.20.0",
     "npm"
   ],
   "packages": [
