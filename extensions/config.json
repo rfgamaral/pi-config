@@ -34,8 +34,8 @@
         "maxThinking": "auto"
     },
     "sessionDefaults": {
-        "model": "openai-codex/gpt-5.6-terra",
-        "thinking": "max"
+        "model": "openai-codex/gpt-6-astra",
+        "thinking": "medium"
     },
     "sessionSnap": {
         "deleteMaxDurationMinutes": 5,
