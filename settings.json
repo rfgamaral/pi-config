@@ -32,6 +32,9 @@
     "--using=v24.20.0",
     "npm"
   ],
+  "observational-memory": {
+    "showWorkerNotifications": false
+  },
   "packages": [
     "git:github.com/DietrichGebert/ponytail",
     "git:github.com/edxeth/pi-gpt-config",
@@ -45,10 +48,10 @@
     "npm:@tintinweb/pi-subagents",
     "npm:@tintinweb/pi-tasks",
     "npm:@tmustier/pi-usage-extension",
-    "npm:pi-context",
     "npm:pi-github",
     "npm:pi-mcp-adapter",
     "npm:pi-memory",
+    "npm:pi-observational-memory",
     "npm:pi-tool-display",
     "npm:pi-web-access"
   ],
