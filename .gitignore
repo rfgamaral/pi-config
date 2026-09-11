@@ -18,6 +18,7 @@ sessions/
 models-store.json
 
 # Extension caches
+web-search-cache/
 extensions/context7/cache/
 mcp-cache.json
 mcp-npx-cache.json
