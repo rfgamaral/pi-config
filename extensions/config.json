@@ -35,7 +35,7 @@
     },
     "sessionDefaults": {
         "model": "openai-codex/gpt-6-astra",
-        "thinking": "medium"
+        "thinking": "xhigh"
     },
     "sessionSnap": {
         "deleteMaxDurationMinutes": 5,
