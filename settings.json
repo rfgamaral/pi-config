@@ -4,7 +4,7 @@
   "compaction": {
     "enabled": true
   },
-  "defaultModel": "gpt-6-astra",
+  "defaultModel": "gpt-5.6-terra",
   "defaultProvider": "openai-codex",
   "defaultThinkingLevel": "xhigh",
   "enabledModels": [

@@ -34,7 +34,7 @@
         "maxThinking": "xhigh"
     },
     "sessionDefaults": {
-        "model": "openai-codex/gpt-6-astra",
+        "model": "openai-codex/gpt-5.6-terra",
         "thinking": "xhigh"
     },
     "sessionSnap": {
