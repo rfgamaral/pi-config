@@ -6,7 +6,7 @@
   },
   "defaultModel": "gpt-5.6-terra",
   "defaultProvider": "openai-codex",
-  "defaultThinkingLevel": "xhigh",
+  "defaultThinkingLevel": "max",
   "enabledModels": [
     "openai-codex/gpt-5.6-luna",
     "openai-codex/gpt-5.6-terra",
@@ -17,14 +17,6 @@
     "anthropic/claude-opus-5",
     "anthropic/claude-fable-5-1"
   ],
-  "gptConfig": {
-    "fastMode": true,
-    "personality": "none",
-    "showFooter": false,
-    "summary": "none",
-    "toolDiscipline": "off",
-    "verbosity": "low"
-  },
   "hideThinkingBlock": true,
   "npmCommand": [
     "fnm",
@@ -36,23 +28,10 @@
     "showWorkerNotifications": false
   },
   "packages": [
-    "git:github.com/DietrichGebert/ponytail",
-    "git:github.com/edxeth/pi-gpt-config",
-    {
-      "source": "git:github.com/obra/superpowers",
-      "autoload": false
-    },
-    "npm:@aliou/pi-guardrails",
     "npm:@gotgenes/pi-anthropic-auth",
-    "npm:@juicesharp/rpiv-ask-user-question",
-    "npm:@tintinweb/pi-subagents",
-    "npm:@tintinweb/pi-tasks",
-    "npm:@tmustier/pi-usage-extension",
-    "npm:pi-github",
     "npm:pi-mcp-adapter",
     "npm:pi-memory",
     "npm:pi-observational-memory",
-    "npm:pi-tool-display",
     "npm:pi-web-access"
   ],
   "quietStartup": true,

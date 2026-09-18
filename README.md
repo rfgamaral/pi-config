@@ -7,13 +7,13 @@ Personal harness configuration for the [Pi](https://github.com/earendil-works/pi
 > [!NOTE]
 > This is a personal configuration repo. Some skills and settings are tailored to my setup and may need adjustments for yours.
 
-This only exports the custom extensions, skills, and prompts listed below. Third-party packages need to be installed separately. Package installation does not apply repository-level configuration files, such as `settings.json` or `keybindings.json`.
+This exports the custom skills and prompts listed below. The setup also uses the community extensions listed below, which need to be installed separately. Package installation does not apply repository-level configuration files, such as `settings.json`.
 
 ```bash
 pi install git:github.com/rfgamaral/pi-config
 ```
 
-Then run `pi config` to enable or disable individual extensions, skills, and prompts. Alternatively, use [package filtering](https://github.com/earendil-works/pi/blob/main/packages/coding-agent/docs/packages.md#package-filtering) in `settings.json`.
+Then run `pi config` to enable or disable installed extensions, skills, and prompts. Alternatively, use [package filtering](https://github.com/earendil-works/pi/blob/main/packages/coding-agent/docs/packages.md#package-filtering) in `settings.json`.
 
 ## AGENTS.md
 
@@ -21,23 +21,10 @@ Global agent instructions loaded into every Pi session as a system prompt extens
 
 ## Included Packages
 
-The repo includes its own set of extensions, skills, and prompts, also exported as a [Pi package](#using-as-a-pi-package) for independent installation.
+The repo exports its skills and prompts as a [Pi package](#using-as-a-pi-package) for independent installation.
 
 > [!NOTE]
 > Provenance: `●` original · `⑂` forked & modified, or inspired & adapted
-
-### Extensions
-
-|     | Extension                                           | Description                                                                                                                |
-| --- | --------------------------------------------------- | -------------------------------------------------------------------------------------------------------------------------- |
-| ●   | [`auto-session-name`](extensions/auto-session-name) | LLM-generated session titles after the first exchange, with automatic re-evaluation on compaction                          |
-| ●   | [`cockpit-panel`](extensions/cockpit-panel)         | Custom editor with rounded-box border, per-project colors, git status, GitHub PR checks, and model/context usage widget    |
-| ⑂   | [`handoff`](extensions/handoff)                     | Goal-directed context handoff to an editable fresh-session prompt, with parent-session recall                              |
-| ⑂   | [`oracle`](extensions/oracle)                       | Second opinion from an alternate model with ranked auto-selection, automatic thinking caps, and optional context injection |
-| ●   | [`session-defaults`](extensions/session-defaults)   | Sets the model and thinking level for each fresh persistent Pi session                                                     |
-| ●   | [`session-favorites`](extensions/session-favorites) | Manage favorite sessions and resume them through Pi's standard session picker                                              |
-| ⑂   | [`session-snap`](extensions/session-snap)           | Review and clean up trivial or old sessions with configurable rules and a filesystem-only archive                          |
-| ⑂   | [`whimsical`](extensions/whimsical)                 | Random short whimsical working messages for Pi's interactive TUI                                                           |
 
 ### Skills
 
@@ -59,23 +46,13 @@ The repo includes its own set of extensions, skills, and prompts, also exported 
 
 In addition to the included packages, the setup relies on these community [Pi packages](https://github.com/earendil-works/pi/blob/main/packages/coding-agent/docs/packages.md) which are installed separately.
 
-| Package                                                                                | Description                                                                             |
-| -------------------------------------------------------------------------------------- | --------------------------------------------------------------------------------------- |
-| [`pi-anthropic-auth`](https://pi.dev/packages/@gotgenes/pi-anthropic-auth)             | Anthropic OAuth compatibility for Pi                                                    |
-| [`pi-github`](https://pi.dev/packages/pi-github)                                       | GitHub toolkit for Pi with thread formatting, PR inspection, and repo search            |
-| [`pi-gpt-config`](https://github.com/edxeth/pi-gpt-config)                             | Codex-parity settings panel for supported OpenAI models                                 |
-| [`pi-guardrails`](https://pi.dev/packages/@aliou/pi-guardrails)                        | Security hooks to reduce accidental destructive actions and secret access               |
-| [`pi-mcp-adapter`](https://pi.dev/packages/pi-mcp-adapter)                             | Adapter to run MCP (Model Context Protocol) servers as Pi extensions                    |
-| [`pi-memory`](https://pi.dev/packages/pi-memory)                                       | Durable memory, daily logs, scratchpad, and qmd-powered search                          |
-| [`pi-observational-memory`](https://pi.dev/packages/pi-observational-memory)           | Session observations and reflections that preserve context through compaction           |
-| [`pi-subagents`](https://pi.dev/packages/@tintinweb/pi-subagents)                      | Claude Code-style subagents with parallel runs, live widget, mid-run steering, and more |
-| [`pi-tasks`](https://pi.dev/packages/@tintinweb/pi-tasks)                              | Claude Code-style task tracking with dependencies and a persistent widget               |
-| [`pi-tool-display`](https://pi.dev/packages/pi-tool-display)                           | OpenCode-style tool rendering for Pi with compact output and richer diffs               |
-| [`pi-usage-extension`](https://pi.dev/packages/@tmustier/pi-usage-extension)           | Dashboard with aggregated usage statistics across all sessions                          |
-| [`pi-web-access`](https://pi.dev/packages/pi-web-access)                               | Web search, URL fetch, GitHub repo cloning, and PDF/YouTube/video extraction            |
-| [`ponytail`](https://github.com/DietrichGebert/ponytail)                               | Minimal coding and review workflows focused on YAGNI and reducing over-engineering      |
-| [`rpiv-ask-user-question`](https://pi.dev/packages/@juicesharp/rpiv-ask-user-question) | Structured clarifying questions with a tabbed dialog and side-by-side previews          |
-| [`superpowers`](https://github.com/obra/superpowers)                                   | Development workflow skills for planning, debugging, testing, and review                |
+| Package                                                                      | Description                                                                   |
+| ---------------------------------------------------------------------------- | ----------------------------------------------------------------------------- |
+| [`pi-anthropic-auth`](https://pi.dev/packages/@gotgenes/pi-anthropic-auth)   | Anthropic OAuth compatibility for Pi                                          |
+| [`pi-mcp-adapter`](https://pi.dev/packages/pi-mcp-adapter)                   | Adapter to run MCP (Model Context Protocol) servers as Pi extensions          |
+| [`pi-memory`](https://pi.dev/packages/pi-memory)                             | Durable memory, daily logs, scratchpad, and qmd-powered search                |
+| [`pi-observational-memory`](https://pi.dev/packages/pi-observational-memory) | Session observations and reflections that preserve context through compaction |
+| [`pi-web-access`](https://pi.dev/packages/pi-web-access)                     | Web search, URL fetch, GitHub repo cloning, and PDF/YouTube/video extraction  |
 
 ## License
 

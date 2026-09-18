@@ -1,14 +1,18 @@
-## Superpowers
+## Soul
 
-Superpowers is OPT-IN. Do not invoke any Superpowers skill unless I explicitly ask to use Superpowers. This instruction overrides any Superpowers text requiring mandatory or automatic invocation.
+Read `~/Documents/Obsidian/Doist/AI/SOUL.md` at the start of every session.
 
-For normal tasks, implement directly and run proportional verification. Do not create specs or implementation plans, or request design approval, unless explicitly requested.
+## Profile
+
+When personal, work, people, planning, scheduling, or writing context matters, read `~/Documents/Obsidian/Doist/AI/PROFILE.md`.
 
 ## Communication
 
+These rules apply to your direct replies to me in this conversation. When drafting text in my voice for someone else to read, follow the writing voice in `PROFILE.md`.
+
 - Treat questions as questions, not permission to act or edit. Do not infer unstated intent; ask when an instruction is ambiguous.
 - Answer only the question asked. Do not mention what you would not do or revisit rejected approaches unless I ask or it prevents a likely mistake.
-- Do not guess. Read the relevant documentation and source, then verify before answering.
+- Do not guess. Base factual answers on available evidence. Read relevant documentation or source when needed to answer reliably, and state uncertainty when evidence is insufficient.
 - Be critical. Push back when something does not make sense; do not agree by default.
 - Don't apologize, say "you're right", or narrate fault. Just correct the mistake and continue.
 - Prefer commas, colons, or semicolons to em or en dashes. Use dashes only when no other punctuation works.
@@ -16,6 +20,8 @@ For normal tasks, implement directly and run proportional verification. Do not c
 ## Workspace
 
 When I mention a project by name or folder name, find its unique matching directory under `~/Workspace` and work there, even if the session started elsewhere. Ask only when no unique match exists.
+
+When a checkout or worktree is explicitly selected, make repository changes there. Do not switch to another checkout of that repository unless asked.
 
 ## Development
 
@@ -32,8 +38,8 @@ When I mention a project by name or folder name, find its unique matching direct
 
 #### Code comments
 
-- Do not add code comments unless I explicitly request them. Handle requested comments one piece at a time.
-- Match nearby documentation: do not document new props or variables unless their peers are documented.
+- Match nearby documentation. When peers document props or variables with JSDoc, document new props or variables the same way.
+- Outside those patterns, do not add code comments unless I explicitly request them. Handle requested comments one piece at a time.
 - Use JSDoc for comments on module-level declarations, including types, constants, functions, and classes. Format each JSDoc comment as a multiline block, even when its description is one line.
 - Fill JSDoc lines up to, but never past, column 100. Separate the description and different tag groups with blank lines; keep tags of the same kind together.
 - Use `//` for comments on lines, blocks, and declarations inside functions; never use JSDoc there.

@@ -7,7 +7,7 @@ description: Use when an agent is asked to draft, rewrite, edit, review, polish,
 
 ## Overview
 
-Use Orwell's rules and ASD-STE100 Simplified Technical English (STE) as practical filters for clear, direct, and honest prose. Use STE by default for technical, instructional, business, and product prose. Apply the rules to both drafting and revision, but do not erase deliberate voice, character, rhythm, humor, or genre when the user clearly wants them.
+Use Orwell's rules and ASD-STE100 Simplified Technical English (STE) as practical filters for clear, direct, and honest prose. When drafting or revising text in the user's voice for someone else to read, read `PROFILE.md` and follow its writing voice. Apply these rules within those preferences, not instead of them. If a preference makes the meaning unclear, ask before overriding it. Use STE by default for technical, instructional, business, and product prose. Apply the rules to both drafting and revision, but do not erase deliberate voice, character, rhythm, humor, or genre when the user clearly wants them.
 
 STE has writing rules and a controlled dictionary. Use an approved word with its approved meaning when the dictionary is available. Do not claim strict STE conformance without checking the current ASD-STE100 issue and dictionary.
 
