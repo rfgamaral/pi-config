@@ -24,13 +24,10 @@
     "--using=v24.21.0",
     "npm"
   ],
-  "observational-memory": {
-    "showWorkerNotifications": false
-  },
   "packages": [
     "npm:@gotgenes/pi-anthropic-auth",
+    "npm:pi-blackhole",
     "npm:pi-mcp-adapter",
-    "npm:pi-observational-memory",
     "npm:pi-web-access"
   ],
   "quietStartup": true,

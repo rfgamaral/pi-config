@@ -9,7 +9,6 @@ mcp-oauth-encrypted/
 bin/
 
 # Pi runtime data
-observational-memory/
 sessions/
 models-store.json
 

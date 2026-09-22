@@ -46,12 +46,12 @@ The repo exports its skills and prompts as a [Pi package](#using-as-a-pi-package
 
 In addition to the included packages, the setup relies on these community [Pi packages](https://github.com/earendil-works/pi/blob/main/packages/coding-agent/docs/packages.md) which are installed separately.
 
-| Package                                                                      | Description                                                                   |
-| ---------------------------------------------------------------------------- | ----------------------------------------------------------------------------- |
-| [`pi-anthropic-auth`](https://pi.dev/packages/@gotgenes/pi-anthropic-auth)   | Anthropic OAuth compatibility for Pi                                          |
-| [`pi-mcp-adapter`](https://pi.dev/packages/pi-mcp-adapter)                   | Adapter to run MCP (Model Context Protocol) servers as Pi extensions          |
-| [`pi-observational-memory`](https://pi.dev/packages/pi-observational-memory) | Session observations and reflections that preserve context through compaction |
-| [`pi-web-access`](https://pi.dev/packages/pi-web-access)                     | Web search, URL fetch, GitHub repo cloning, and PDF/YouTube/video extraction  |
+| Package                                                                    | Description                                                                  |
+| -------------------------------------------------------------------------- | ---------------------------------------------------------------------------- |
+| [`pi-anthropic-auth`](https://pi.dev/packages/@gotgenes/pi-anthropic-auth) | Anthropic OAuth compatibility for Pi                                         |
+| [`pi-blackhole`](https://pi.dev/packages/pi-blackhole)                     | Long-running session memory, recall, and automatic context compaction        |
+| [`pi-mcp-adapter`](https://pi.dev/packages/pi-mcp-adapter)                 | Adapter to run MCP (Model Context Protocol) servers as Pi extensions         |
+| [`pi-web-access`](https://pi.dev/packages/pi-web-access)                   | Web search, URL fetch, GitHub repo cloning, and PDF/YouTube/video extraction |
 
 ## License
 
