@@ -50,7 +50,6 @@ In addition to the included packages, the setup relies on these community [Pi pa
 | ---------------------------------------------------------------------------- | ----------------------------------------------------------------------------- |
 | [`pi-anthropic-auth`](https://pi.dev/packages/@gotgenes/pi-anthropic-auth)   | Anthropic OAuth compatibility for Pi                                          |
 | [`pi-mcp-adapter`](https://pi.dev/packages/pi-mcp-adapter)                   | Adapter to run MCP (Model Context Protocol) servers as Pi extensions          |
-| [`pi-memory`](https://pi.dev/packages/pi-memory)                             | Durable memory, daily logs, scratchpad, and qmd-powered search                |
 | [`pi-observational-memory`](https://pi.dev/packages/pi-observational-memory) | Session observations and reflections that preserve context through compaction |
 | [`pi-web-access`](https://pi.dev/packages/pi-web-access)                     | Web search, URL fetch, GitHub repo cloning, and PDF/YouTube/video extraction  |
 

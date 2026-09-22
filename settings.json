@@ -30,7 +30,6 @@
   "packages": [
     "npm:@gotgenes/pi-anthropic-auth",
     "npm:pi-mcp-adapter",
-    "npm:pi-memory",
     "npm:pi-observational-memory",
     "npm:pi-web-access"
   ],
