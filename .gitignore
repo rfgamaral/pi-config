@@ -9,6 +9,7 @@ auth.json
 bin/
 
 # Pi runtime data
+pi-blackhole/
 sessions/
 models-store.json
 
