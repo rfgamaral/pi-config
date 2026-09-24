@@ -20,6 +20,7 @@
     "npm"
   ],
   "packages": [
+    "npm:@dietrichgebert/ponytail",
     "npm:@gotgenes/pi-anthropic-auth",
     "npm:bladebro",
     "npm:donsetch",
