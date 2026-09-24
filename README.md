@@ -48,6 +48,7 @@ In addition to the included packages, the setup relies on these community [Pi pa
 
 | Package                                                                    | Description                                                           |
 | -------------------------------------------------------------------------- | --------------------------------------------------------------------- |
+| [`Bladebro`](https://github.com/dondai44423/bladebro)                      | Stateful, stealth-focused browser automation for AI agents            |
 | [`DonSeTch`](https://github.com/dondai44423/donsetch)                      | Web search, extraction, crawling, screenshots, and PDF/OCR processing |
 | [`pi-anthropic-auth`](https://pi.dev/packages/@gotgenes/pi-anthropic-auth) | Anthropic OAuth compatibility for Pi                                  |
 | [`pi-blackhole`](https://pi.dev/packages/pi-blackhole)                     | Long-running session memory, recall, and automatic context compaction |
