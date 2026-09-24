@@ -21,9 +21,9 @@
   ],
   "packages": [
     "npm:@gotgenes/pi-anthropic-auth",
+    "npm:donsetch",
     "npm:pi-blackhole",
-    "npm:pi-mcp-adapter",
-    "npm:pi-web-access"
+    "npm:pi-mcp-adapter"
   ],
   "quietStartup": true,
   "terminal": {
