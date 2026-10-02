@@ -47,6 +47,6 @@ When a checkout or worktree is explicitly selected, make repository changes ther
 
 ### Doist-specific guidelines
 
-- For repos under `~/Workspace/Doist/`, prefix branch names with `ricardo/`.
+- Prefix branch names you create, suggest, or generate with `ricardo/`, regardless of worktree location. Identify repositories by their Git remotes or source checkout under `~/Workspace/Doist/`, not just the current directory.
 - Check `docs/README.md` first if it exists.
 - Treat `docs/` as the primary source for intended behavior, architecture, workflows, and conventions; use code as the source of truth for implementation details.
