@@ -12,6 +12,9 @@
     "openai-codex/gpt-6-sol",
     "openai-codex/gpt-6-astra"
   ],
+  "extensions": [
+    "-builtin:mcp"
+  ],
   "hideThinkingBlock": true,
   "npmCommand": [
     "fnm",
