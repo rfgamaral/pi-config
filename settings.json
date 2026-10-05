@@ -1,5 +1,5 @@
 {
-  "lastChangelogVersion": "0.87.1",
+  "lastChangelogVersion": "1.0.3",
   "collapseChangelog": true,
   "compaction": {
     "enabled": true
@@ -30,7 +30,7 @@
     "npm:pi-blackhole",
     "npm:pi-mcp-adapter"
   ],
-  "quietStartup": true,
+  "quietStartup": "header",
   "terminal": {
     "showTerminalProgress": true
   },
