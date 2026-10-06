@@ -35,7 +35,8 @@
     "npm:bladebro",
     "npm:donsetch",
     "npm:pi-blackhole",
-    "npm:pi-mcp-adapter"
+    "npm:pi-mcp-adapter",
+    "npm:pi-system-one"
   ],
   "quietStartup": "header",
   "terminal": {
