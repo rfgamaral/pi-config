@@ -19,6 +19,18 @@ Then run `pi config` to enable or disable installed extensions, skills, and prom
 
 Global agent instructions loaded into every Pi session as a system prompt extension. Contains communication preferences and development rules, not project contribution guidelines. Pi loads it globally when this repo is the agent directory (`~/.pi/agent/` by default, configurable with `PI_CODING_AGENT_DIR`) and project-locally when this repo is the current directory or an ancestor.
 
+## Local Extensions
+
+These extensions load automatically when this repo is the Pi agent directory. They are not exported by the package manifest.
+
+### Paseo branch metadata context
+
+[`paseo-branch-metadata-context`](extensions/paseo-branch-metadata-context.ts) adds the primary worktree path and Git remotes to Paseo's branch/title generation system prompt, letting `AGENTS.md` rules apply outside the source checkout's directory. Read-only and offline; strips URL credentials, queries, and fragments without duplicating naming rules.
+
+Requires Paseo launch markers, an in-memory RPC session, and the recognized branch-generation prompt with its `BranchName` schema. Skips normal chats, commit/PR metadata, unknown formats, and Git failures. Non-Pi provider fallbacks bypass it.
+
+New sessions load it automatically; existing sessions need `/reload`.
+
 ## Included Packages
 
 The repo exports its skills and prompts as a [Pi package](#using-as-a-pi-package) for independent installation.
