@@ -19,9 +19,6 @@
     "openai-codex/gpt-6.1-sol",
     "openai-codex/gpt-6-luna"
   ],
-  "extensions": [
-    "-builtin:mcp"
-  ],
   "hideThinkingBlock": true,
   "npmCommand": [
     "fnm",
@@ -35,7 +32,6 @@
     "npm:bladebro",
     "npm:donsetch",
     "npm:pi-blackhole",
-    "npm:pi-mcp-adapter",
     "npm:pi-system-one"
   ],
   "quietStartup": "header",

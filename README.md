@@ -52,7 +52,6 @@ In addition to the included packages, the setup relies on these community [Pi pa
 | [`DonSeTch`](https://github.com/dondai44423/donsetch)                      | Web search, extraction, crawling, screenshots, and PDF/OCR processing |
 | [`pi-anthropic-auth`](https://pi.dev/packages/@gotgenes/pi-anthropic-auth) | Anthropic OAuth compatibility for Pi                                  |
 | [`pi-blackhole`](https://pi.dev/packages/pi-blackhole)                     | Long-running session memory, recall, and automatic context compaction |
-| [`pi-mcp-adapter`](https://pi.dev/packages/pi-mcp-adapter)                 | Adapter to run MCP (Model Context Protocol) servers as Pi extensions  |
 | [`Ponytail`](https://github.com/DietrichGebert/ponytail)                   | Lazy senior developer mode that prioritizes reuse and minimal code    |
 
 ## License
