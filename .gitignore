@@ -2,7 +2,6 @@
 .vscode/
 
 # Authentication
-mcp-oauth-encrypted/
 auth.json
 
 # Pi auto-downloaded binaries
@@ -12,10 +11,6 @@ bin/
 pi-blackhole/
 sessions/
 models-store.json
-
-# Extension caches
-mcp-cache.json
-mcp-npx-cache.json
 
 # Project dependencies
 git/
