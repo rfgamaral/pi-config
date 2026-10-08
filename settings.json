@@ -29,6 +29,8 @@
   "packages": [
     "npm:@dietrichgebert/ponytail",
     "npm:@gotgenes/pi-anthropic-auth",
+    "npm:@juicesharp/rpiv-ask-user-question",
+    "npm:@juicesharp/rpiv-todo",
     "npm:bladebro",
     "npm:donsetch",
     "npm:pi-blackhole",

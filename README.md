@@ -58,13 +58,15 @@ The repo exports its skills and prompts as a [Pi package](#using-as-a-pi-package
 
 In addition to the included packages, the setup relies on these community [Pi packages](https://github.com/earendil-works/pi/blob/main/packages/coding-agent/docs/packages.md) which are installed separately.
 
-| Package                                                                    | Description                                                           |
-| -------------------------------------------------------------------------- | --------------------------------------------------------------------- |
-| [`Bladebro`](https://github.com/dondai44423/bladebro)                      | Stateful, stealth-focused browser automation for AI agents            |
-| [`DonSeTch`](https://github.com/dondai44423/donsetch)                      | Web search, extraction, crawling, screenshots, and PDF/OCR processing |
-| [`pi-anthropic-auth`](https://pi.dev/packages/@gotgenes/pi-anthropic-auth) | Anthropic OAuth compatibility for Pi                                  |
-| [`pi-blackhole`](https://pi.dev/packages/pi-blackhole)                     | Long-running session memory, recall, and automatic context compaction |
-| [`Ponytail`](https://github.com/DietrichGebert/ponytail)                   | Lazy senior developer mode that prioritizes reuse and minimal code    |
+| Package                                                                                | Description                                                           |
+| -------------------------------------------------------------------------------------- | --------------------------------------------------------------------- |
+| [`Bladebro`](https://github.com/dondai44423/bladebro)                                  | Stateful, stealth-focused browser automation for AI agents            |
+| [`DonSeTch`](https://github.com/dondai44423/donsetch)                                  | Web search, extraction, crawling, screenshots, and PDF/OCR processing |
+| [`pi-anthropic-auth`](https://pi.dev/packages/@gotgenes/pi-anthropic-auth)             | Anthropic OAuth compatibility for Pi                                  |
+| [`pi-blackhole`](https://pi.dev/packages/pi-blackhole)                                 | Long-running session memory, recall, and automatic context compaction |
+| [`Ponytail`](https://github.com/DietrichGebert/ponytail)                               | Lazy senior developer mode that prioritizes reuse and minimal code    |
+| [`rpiv-ask-user-question`](https://pi.dev/packages/@juicesharp/rpiv-ask-user-question) | Structured questions with selectable options and native Paseo forms   |
+| [`rpiv-todo`](https://pi.dev/packages/@juicesharp/rpiv-todo)                           | Task tracking that survives compaction, with native Paseo task lists  |
 
 ## License
 
