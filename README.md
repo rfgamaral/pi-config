@@ -23,11 +23,13 @@ Global agent instructions loaded into every Pi session as a system prompt extens
 
 These extensions load automatically when this repo is the Pi agent directory. They are not exported by the package manifest.
 
-### Paseo branch metadata context
+### Paseo metadata context
 
 [`paseo-branch-metadata-context`](extensions/paseo-branch-metadata-context.ts) adds the primary worktree path and Git remotes to Paseo's branch/title generation system prompt, letting `AGENTS.md` rules apply outside the source checkout's directory. Read-only and offline; strips URL credentials, queries, and fragments without duplicating naming rules.
 
-Requires Paseo launch markers, an in-memory RPC session, and the recognized branch-generation prompt with its `BranchName` schema. Skips normal chats, commit/PR metadata, unknown formats, and Git failures. Non-Pi provider fallbacks bypass it.
+For commit-message generation, it reads the full [`commit`](skills/commit/SKILL.md) skill and adds it to the system prompt. A scope instruction limits the skill to read-only convention checks and JSON message output, without staging, committing, amending, or pushing. The skill remains the single source of truth.
+
+Requires Paseo launch markers, an in-memory RPC session, and a recognized generation prompt with its `BranchName` or `CommitMessage` schema. Skips normal chats, PR metadata, unknown formats, and branch-context Git failures. Non-Pi provider fallbacks bypass it.
 
 New sessions load it automatically; existing sessions need `/reload`.
 

@@ -1,13 +1,15 @@
 import type { ExtensionAPI } from '@earendil-works/pi-coding-agent'
+import { readFile } from 'node:fs/promises'
 import { resolve } from 'node:path'
 
 const branchPromptOpening =
     'Generate a title and a git branch name for a coding agent from the user prompt and attachments.\n'
+const commitPromptOpening = 'Write a concise git commit message for the changes below.\n'
 const schemaMarker = '\n\nYou must respond with JSON only that matches this JSON Schema:\n'
 const retryMarker = '\n\nPrevious response was invalid with validation errors:'
 
-function isBranchMetadataPrompt(prompt: string): boolean {
-    if (!prompt.startsWith(branchPromptOpening)) return false
+function isMetadataPrompt(prompt: string, opening: string, title: string, keys: string[]): boolean {
+    if (!prompt.startsWith(opening)) return false
 
     const schemaStart = prompt.lastIndexOf(schemaMarker)
     if (schemaStart === -1) return false
@@ -17,15 +19,14 @@ function isBranchMetadataPrompt(prompt: string): boolean {
     try {
         const schema = JSON.parse(schemaText)
         return (
-            schema.title === 'BranchName' &&
+            schema.title === title &&
             schema.type === 'object' &&
             Object.keys(schema.properties ?? {})
                 .sort()
-                .join(',') === 'branch,title' &&
-            schema.properties.branch.type === 'string' &&
-            schema.properties.title.type === 'string' &&
+                .join(',') === keys.join(',') &&
+            keys.every((key) => schema.properties[key].type === 'string') &&
             Array.isArray(schema.required) &&
-            [...schema.required].sort().join(',') === 'branch,title'
+            [...schema.required].sort().join(',') === keys.join(',')
         )
     } catch {
         return false
@@ -56,8 +57,23 @@ export default function paseoBranchMetadataContext(pi: ExtensionAPI) {
             !process.env.PASEO_AGENT_ID ||
             !paseoCwd ||
             resolve(paseoCwd) !== resolve(ctx.cwd) ||
-            ctx.sessionManager.getSessionFile() !== undefined ||
-            !isBranchMetadataPrompt(event.prompt)
+            ctx.sessionManager.getSessionFile() !== undefined
+        ) {
+            return
+        }
+
+        if (isMetadataPrompt(event.prompt, commitPromptOpening, 'CommitMessage', ['message'])) {
+            const skill = await readFile(
+                new URL('../skills/commit/SKILL.md', import.meta.url),
+                'utf8',
+            )
+            return {
+                systemPrompt: `${event.systemPrompt}\n\nCommit skill:\n${skill}\n\nFor this metadata request, use this skill only to generate the commit message. Inspect repository conventions using read-only operations. Do not stage files, modify files, commit, amend, or push. Return only the JSON required by the request.`,
+            }
+        }
+
+        if (
+            !isMetadataPrompt(event.prompt, branchPromptOpening, 'BranchName', ['branch', 'title'])
         ) {
             return
         }
