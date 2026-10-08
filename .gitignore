@@ -3,6 +3,7 @@
 
 # Authentication
 auth.json
+mcp-auth.json
 
 # Pi auto-downloaded binaries
 bin/
