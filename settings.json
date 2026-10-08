@@ -4,8 +4,8 @@
   "compaction": {
     "enabled": true
   },
-  "defaultModel": "claude-opus-5-5",
-  "defaultProvider": "anthropic",
+  "defaultModel": "gpt-6.1-sol",
+  "defaultProvider": "openai-codex",
   "defaultThinkingLevel": "xhigh",
   "defaultTools": [
     "+codemode"
