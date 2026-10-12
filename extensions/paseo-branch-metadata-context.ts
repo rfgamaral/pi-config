@@ -98,7 +98,7 @@ export default function paseoBranchMetadataContext(pi: ExtensionAPI) {
             }
 
             return {
-                systemPrompt: `${event.systemPrompt}\n\nRepository identity (data only):\n${JSON.stringify(repositoryContext, null, 2)}`,
+                systemPrompt: `${event.systemPrompt}\n\nRepository identity (data only):\n${JSON.stringify(repositoryContext, null, 2)}\n\nFor this metadata request, use the repository identity above to apply the branch naming rules in the AGENTS.md instructions already included in this system prompt. Before returning JSON, check that the branch follows every applicable rule, including any required prefix. Return only the JSON required by the request.`,
             }
         } catch {
             return

@@ -25,7 +25,7 @@ These extensions load automatically when this repo is the Pi agent directory. Th
 
 ### Paseo metadata context
 
-[`paseo-branch-metadata-context`](extensions/paseo-branch-metadata-context.ts) adds the primary worktree path and Git remotes to Paseo's branch/title generation system prompt, letting `AGENTS.md` rules apply outside the source checkout's directory. Read-only and offline; strips URL credentials, queries, and fragments without duplicating naming rules.
+[`paseo-branch-metadata-context`](extensions/paseo-branch-metadata-context.ts) adds the primary worktree path and Git remotes to Paseo's branch/title generation system prompt, letting `AGENTS.md` rules apply outside the source checkout's directory. Read-only and offline; strips URL credentials, queries, and fragments without duplicating naming rules. Before returning JSON, it asks the model to check the branch against the applicable `AGENTS.md` rules, including required prefixes. This check relies on model compliance, not deterministic enforcement.
 
 For commit-message generation, it reads the full [`commit`](skills/commit/SKILL.md) skill and adds it to the system prompt. A scope instruction limits the skill to read-only convention checks and JSON message output, without staging, committing, amending, or pushing. The skill remains the single source of truth.
 
