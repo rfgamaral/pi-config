@@ -34,6 +34,15 @@ When I mention a project by name or folder name, find its unique matching direct
 
 When a checkout or worktree is explicitly selected, make repository changes there. Do not switch to another checkout of that repository unless asked.
 
+## Agent-generated files
+
+- Store agent-generated artifacts and scratch files under `~/.artifacts/` on persistent home storage. This includes temporary and retained outputs, recordings, screenshots, drafts, exports, scratch files, and temporary project clones. Never use `/tmp`.
+- Organize files by workspace, UTC date, then agent run: `~/.artifacts/<workspace-key>/YYYY-MM-DD/HH-mm-ss-<agent-id>-<unique-run-id>/`.
+- Use stable workspace and run IDs supplied by the orchestration environment when available. Do not rely on project names or agent display names alone. If an ID is unavailable, add a generated unique suffix and never reuse another run's directory.
+- Give each agent and subagent its own run directory. Put temporary clones in `clones/<repository>/`, and group other files in suitable subdirectories such as `screenshots/`, `recordings/`, and `scratch/`.
+- Keep edits to the active project checkout there, and leave tool-managed checkouts in their managed locations.
+- Do not automatically delete or expire artifacts. Clean them up only when explicitly requested.
+
 ## Development
 
 ### Universal guidelines
