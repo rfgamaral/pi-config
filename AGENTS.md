@@ -37,8 +37,10 @@ When a checkout or worktree is explicitly selected, make repository changes ther
 ## Agent-generated files
 
 - Store agent-generated artifacts and scratch files under `~/.artifacts/` on persistent home storage. This includes temporary and retained outputs, recordings, screenshots, drafts, exports, scratch files, and temporary project clones. Never use `/tmp`.
-- Organize files by workspace, UTC date, then agent run: `~/.artifacts/<workspace-key>/YYYY-MM-DD/HH-mm-ss-<agent-id>-<unique-run-id>/`.
-- Use stable workspace and run IDs supplied by the orchestration environment when available. Do not rely on project names or agent display names alone. If an ID is unavailable, add a generated unique suffix and never reuse another run's directory.
+- Put each run's files in `~/.artifacts/<workspace-key>/<YYYY-MM-DD>/<HH-mm-ss>-<agent-id>/`, with the UTC date and time the run started.
+- `<workspace-key>`: the main checkout's path with `/` replaced by `-`: below `~`, such as `Workspace-Doist-todoist-web`; `home` for `~` itself; and prefixed with `root`, such as `root-opt-foo`, outside `~`. In a Git repository, the main checkout is the first path in `git worktree list --porcelain`, so all its worktrees share one key; elsewhere, use the working directory.
+- `<agent-id>`: the last 8 characters of `PI_SESSION_ID`. A subagent with the same `PI_SESSION_ID` as its parent appends `-` and 4 random hex characters.
+- Reuse the same run directory for the whole session, including after a resume. Before creating one, look for an existing `~/.artifacts/<workspace-key>/*/*-<agent-id>/`.
 - Give each agent and subagent its own run directory. Put temporary clones in `clones/<repository>/`, and group other files in suitable subdirectories such as `screenshots/`, `recordings/`, and `scratch/`.
 - Keep edits to the active project checkout there, and leave tool-managed checkouts in their managed locations.
 - Do not automatically delete or expire artifacts. Clean them up only when explicitly requested.
