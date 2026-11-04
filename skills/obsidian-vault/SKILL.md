@@ -1,13 +1,13 @@
 ---
 name: obsidian-vault
-description: Use when reading, searching, creating, or editing notes in the Obsidian vault, or when the user references their personal knowledge base
+description: Use when reading, searching, creating, or editing notes in the Obsidian vault, or when the user mentions a vault, knowledge base, notes, snippets, meeting notes, review notes, or similar note-taking content.
 ---
 
 # Obsidian Vault
 
 ## Overview
 
-Direct filesystem access to the user's Obsidian vault. Read, search, create, and edit markdown notes. No CLI or running Obsidian instance required.
+Direct filesystem access to read and edit Markdown notes. No CLI or running Obsidian instance required.
 
 ## Vault Location
 
@@ -15,23 +15,20 @@ Direct filesystem access to the user's Obsidian vault. Read, search, create, and
 ~/Documents/Obsidian/
 ```
 
-## Structure
+## Note Placement
 
-```
-Obsidian/
-├── .obsidian/          # ⛔ NEVER TOUCH
-├── Templates/          # Obsidian templates (read-only reference)
-├── Doist/              # Work notes
-├── Personal/           # Personal notes
-└── *.md                # Root-level notes
-```
+- Apply these rules only when creating a note. For edits or appends, use the requested note instead.
+- Use an explicit destination when one is provided.
+- Otherwise, search the vault and create related notes beside the related material.
+- Otherwise, place temporary or unrelated notes at the vault root.
+- Move root notes only when asked to persist them elsewhere.
 
 ## Conventions
 
-- **Links:** Standard markdown `[text](path)` (not `[[wikilinks]]`)
+- **Links:** Use standard Markdown `[text](path)`, not `[[wikilinks]]`. This convention takes precedence over `obsidian-markdown`.
 - **Attachments:** Stored in `./attachments/` relative to the note's folder
-- **Templates:** Located in `Templates/`, used by Obsidian's core template plugin
-- **Markdown syntax:** If the `obsidian-markdown` skill is available, follow it for Obsidian-specific syntax (callouts, embeds, properties, etc.)
+- **Templates:** Located in `Templates/`. Treat them as read-only reference unless the user explicitly asks to create or edit a template.
+- **Markdown syntax:** For Obsidian-specific syntax other than links, follow the `obsidian-markdown` skill when it is available.
 
 ## Guardrails
 
@@ -41,21 +38,4 @@ Obsidian/
 
 **When editing existing notes**, use surgical edits (find and replace) rather than full file rewrites to minimize risk of data loss.
 
-**When moving or renaming notes**, always search for and update all references to the note across the vault. Use the backlinks command to find affected files before moving.
-
-## Operations Quick Reference
-
-| Task                 | How                                                                                                                                     |
-| -------------------- | --------------------------------------------------------------------------------------------------------------------------------------- |
-| Find notes           | `find ~/Documents/Obsidian/ -name "*.md" -not -path "*/.obsidian/*"`                                                                    |
-| Search content       | `rg "query" ~/Documents/Obsidian/ --glob "!.obsidian"`                                                                                  |
-| Read a note          | Read tool with the file path                                                                                                            |
-| Create a note        | Write tool — confirm path and preview content with user first                                                                           |
-| Edit a note          | Edit tool — show the change to the user first                                                                                           |
-| Recent notes (Linux) | `find ~/Documents/Obsidian/ -name "*.md" -not -path "*/.obsidian/*" -mtime -7 -printf "%T@ %p\n" \| sort -rn \| cut -d' ' -f2-`         |
-| Recent notes (macOS) | `find ~/Documents/Obsidian/ -name "*.md" -not -path "*/.obsidian/*" -mtime -7 -exec stat -f "%m %N" {} + \| sort -rn \| cut -d' ' -f2-` |
-| Backlinks            | `rg "Note Name" ~/Documents/Obsidian/ --glob "!.obsidian" -l`                                                                           |
-| Vault overview       | `find ~/Documents/Obsidian/ -type d -not -path "*/.obsidian/*"`                                                                         |
-| Notes per folder     | `find ~/Documents/Obsidian/ -name "*.md" -not -path "*/.obsidian/*" \| sed 's#/[^/]*$##' \| sort \| uniq -c \| sort -rn`                |
-| Find todos           | `rg "\- \[ \]" ~/Documents/Obsidian/ --glob "!.obsidian"`                                                                               |
-| Find tags            | `rg "#[\w][\w/-]+" ~/Documents/Obsidian/ --glob "!.obsidian" -o \| sort \| uniq -c \| sort -rn`                                         |
+**When moving or renaming notes**, find affected links first, then update incoming links and any affected relative links or attachment paths.

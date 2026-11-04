@@ -1,2 +1,5 @@
 # Automatic end-of-line normalization for all text files
 * text=auto eol=lf
+
+# Keep Pi changelog state out of version control
+/settings.json filter=pi-settings

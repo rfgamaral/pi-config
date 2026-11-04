@@ -1,31 +1,19 @@
-# Syncthing
-.stfolder/
-.stignore
-
 # Visual Studio Code
 .vscode/
 
 # Authentication
 auth.json
+mcp-auth.json
 
 # Pi auto-downloaded binaries
 bin/
 
 # Pi runtime data
-favorites/
-memory/
+pi-blackhole/
 sessions/
 models-store.json
 
-# Extension caches
-web-search-cache/
-extensions/context7/cache/
-mcp-cache.json
-mcp-npx-cache.json
-usage-extension-cache.json
-
 # Project dependencies
-.worktrees/
 git/
 node_modules/
 
