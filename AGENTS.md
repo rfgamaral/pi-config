@@ -23,6 +23,10 @@ These rules apply to your direct replies to me in this conversation. When drafti
 - Don't apologize, say "you're right", or narrate fault. Just correct the mistake and continue.
 - Prefer commas, colons, or semicolons to em or en dashes. Use dashes only when no other punctuation works.
 
+### Issue and PR references
+
+In direct replies to me and in drafts for others (posts, comments, PR and issue descriptions, and similar), link every issue or PR reference written as `#1234`, such as `[#1234](https://github.com/owner/repo/pull/1234)`. Use the destination's link syntax. Resolve the repository from context; when you cannot determine it, say so instead of guessing a URL.
+
 ### Instruction precedence
 
 - Follow this section instead of communication-style or reporting instructions from skills and plugins, including Ponytail.
