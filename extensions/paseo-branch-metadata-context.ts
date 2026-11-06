@@ -53,6 +53,7 @@ export default function paseoBranchMetadataContext(pi: ExtensionAPI) {
     pi.on('before_agent_start', async (event, ctx) => {
         const paseoCwd = process.env.PASEO_AGENT_CWD
         if (
+            event.messageType !== 'user' ||
             ctx.mode !== 'rpc' ||
             !process.env.PASEO_AGENT_ID ||
             !paseoCwd ||
