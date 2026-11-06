@@ -19,6 +19,9 @@
     "openai-codex/gpt-6-luna"
   ],
   "hideThinkingBlock": true,
+  "longTermMemory": {
+    "summaryModel": "openai-codex/gpt-6-luna"
+  },
   "npmCommand": [
     "fnm",
     "exec",

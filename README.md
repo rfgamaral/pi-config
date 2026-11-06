@@ -35,6 +35,16 @@ Requires Paseo launch markers, an in-memory RPC session, and a recognized genera
 
 New sessions load it automatically; existing sessions need `/reload`.
 
+### Long-term memory
+
+[`long-term-memory`](extensions/long-term-memory.ts) gives Pi persistent memory across sessions as plain Markdown files in `memory/` under the agent directory. `MEMORY.md` holds facts that apply everywhere, `projects/<repo>.md` holds facts about one repository (named from its Git origin, so all worktrees share it), and `daily/` holds short session notes. The memory for the current project is added to the system prompt once per session, so the prompt cache stays valid.
+
+A background pass summarizes new conversation after enough new prompts or after an idle period. It uses the model set as `longTermMemory.summaryModel` in [`settings.json`](settings.json), written as `provider/id`, and falls back to the session's model when that one is unavailable. It never blocks a turn and does no work at shutdown, because apps that run Pi as a subprocess can kill it within milliseconds of exiting. Sessions that ended before their content was saved are summarized later by whichever Pi process runs next. Progress is journaled per session, so a kill at any point neither loses nor duplicates memory, and many Pi processes can share the memory directory safely.
+
+It provides the `memory_write`, `memory_read`, `memory_forget`, `memory_restore`, `memory_search`, `scratchpad`, and `memory_status` tools, compatible with [`pi-memory`](https://github.com/jayzeng/pi-memory), which it is based on. Search is a built-in keyword search; `deep` mode also searches past session transcripts. Tunables are constants at the top of the file. Background activity is logged to `memory/.state/activity.log`. When the summary model hits its usage limit, summaries keep failing for an hour, or a message has to be skipped, every open session shows a notification when its next turn starts (in the terminal, right away).
+
+New sessions load it automatically; existing sessions need `/reload`.
+
 ## Included Packages
 
 The repo exports its skills and prompts as a [Pi package](#using-as-a-pi-package) for independent installation.

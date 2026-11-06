@@ -9,6 +9,7 @@ mcp-auth.json
 bin/
 
 # Pi runtime data
+memory/
 pi-blackhole/
 sessions/
 models-store.json
