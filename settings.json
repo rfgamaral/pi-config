@@ -3,14 +3,14 @@
   "compaction": {
     "enabled": true
   },
-  "defaultModel": "gpt-6.1-sol",
-  "defaultProvider": "openai-codex",
-  "defaultThinkingLevel": "xhigh",
+  "defaultModel": "claude-opus-5-5",
+  "defaultProvider": "anthropic",
+  "defaultThinkingLevel": "high",
   "defaultTools": [
     "+codemode"
   ],
   "enabledModels": [
-    "anthropic/claude-fable-5-1",
+    "anthropic/claude-fable-5-2",
     "anthropic/claude-opus-5-5",
     "anthropic/claude-sonnet-5-5",
     "anthropic/claude-haiku-5-5",
@@ -20,7 +20,7 @@
   ],
   "hideThinkingBlock": true,
   "longTermMemory": {
-    "summaryModel": "openai-codex/gpt-6-luna"
+    "summaryModel": "anthropic/claude-sonnet-5-5"
   },
   "npmCommand": [
     "fnm",
