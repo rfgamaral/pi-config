@@ -45,6 +45,16 @@ It provides the `memory_write`, `memory_read`, `memory_forget`, `memory_restore`
 
 New sessions load it automatically; existing sessions need `/reload`.
 
+### Anthropic skills
+
+[`anthropic-skills`](extensions/anthropic-skills.ts) makes Claude load skills the way Claude Code does, because Claude often skips Pi's "read the skill file" instruction, mostly for skills about how to do work it thinks it already knows, such as writing or reviewing. It applies only to the `anthropic` provider; other providers keep Pi's default skill handling.
+
+- Adds a `skill` tool, sent to Anthropic OAuth requests as `Skill`, with Claude Code's input (`skill`, `args`) and an adapted version of its tool prompt. The tool returns the same skill block as Pi's `/skill:name` expansion.
+- Replaces Pi's "use the read tool" line above `<available_skills>` with instructions to use the `Skill` tool. The catalog itself comes from Pi, so installed skills need no configuration.
+- After each tool turn, adds a short hidden reminder to load any skill that covers the next step. The reminder is saved in the session, so the prompt cache stays valid; it adds about 100 tokens per tool turn.
+
+New sessions load it automatically; existing sessions need `/reload`.
+
 ## Included Packages
 
 The repo exports its skills and prompts as a [Pi package](#using-as-a-pi-package) for independent installation.
