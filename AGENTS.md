@@ -74,6 +74,11 @@ When a checkout or worktree is explicitly selected, make repository changes ther
 - Use `//` for comments on lines, blocks, and declarations inside functions; never use JSDoc there.
 - Omit terminal periods from single-sentence inline code comments; use terminal periods in JSDoc descriptions.
 
+### GitHub attachments
+
+- Upload images and videos with `gh issue|pr create|edit|comment --attach <file>` (gh 2.99+). Do not use the browser or claim `gh` cannot upload files. `gh pr review` has no `--attach`; use `gh pr comment`.
+- Reference a file inline as `![alt](./file.png)`. Limits: 50 files per command, 10 MB per file (videos up to 100 MB on paid plans).
+
 ### Doist-specific guidelines
 
 - Prefix branch names you create, suggest, or generate with `ricardo/`, regardless of worktree location. Identify repositories by their Git remotes or source checkout under `~/Workspace/Doist/`, not just the current directory.
